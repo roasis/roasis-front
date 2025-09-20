@@ -60,13 +60,13 @@ export default function SelectUserTypeModalContent() {
       {/* User Type Selection */}
       <div className="flex gap-4">
         <UserTypeCard
-          title="Gallery User"
+          title="Gallery"
           description="I manage a gallery"
           icon={<Building2 className="w-12 h-12 text-blue-500" />}
           onClick={() => handleContinue(UserRole.GALLERY)}
         />
         <UserTypeCard
-          title="General User"
+          title="User & Artist"
           description="I collect or make artworks"
           icon={<User className="w-12 h-12 text-blue-500" />}
           onClick={() => handleContinue(UserRole.USER)}
