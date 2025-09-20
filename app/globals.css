@@ -42,7 +42,7 @@
 }
 
 @theme {
-  --color-primary: #e53e3e;
+  --color-brend: #009cf6;
 }
 
 @import 'tailwindcss';

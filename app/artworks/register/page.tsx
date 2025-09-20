@@ -170,7 +170,7 @@ export default function RegisterArtworkPage() {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="inline-block bg-primary/80 hover:bg-primary text-white px-6 py-3 rounded-lg cursor-pointer transition-colors"
+                    className="inline-block bg-brend/80 hover:bg-brend text-white px-6 py-3 rounded-lg cursor-pointer transition-colors"
                   >
                     이미지 선택
                   </label>
@@ -386,7 +386,7 @@ export default function RegisterArtworkPage() {
                   disabled={
                     isSubmitting || !artworkData.title || !artworkData.image
                   }
-                  className="flex-1 bg-primary/80 hover:bg-primary text-white py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-brend/80 hover:bg-color-brend text-white py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   type="submit"
                 >
                   {isSubmitting ? '등록 중...' : '작품 등록'}
