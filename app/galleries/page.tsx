@@ -64,7 +64,9 @@ export default function GalleriesPage() {
       {!loading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {galleries.map((gallery) => (
-            <GalleryCard key={gallery.id} gallery={gallery} />
+            <Link href={`/galleries/${gallery.id}`} key={gallery.id}>
+              <GalleryCard gallery={gallery} />
+            </Link>
           ))}
         </div>
       )}
