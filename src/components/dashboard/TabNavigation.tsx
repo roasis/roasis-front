@@ -24,7 +24,7 @@ export default function TabNavigation<
           onClick={() => onTabChange(tab)}
           className={`text-lg font-medium transition-colors ${
             activeTab === tab
-              ? 'text-white border-b-2 border-primary pb-2'
+              ? 'text-white border-b-2 border-brend pb-2'
               : 'text-gray-400 hover:text-white'
           }`}
         >
