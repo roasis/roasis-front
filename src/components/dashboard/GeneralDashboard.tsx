@@ -105,7 +105,7 @@ export default function GeneralDashboard() {
           />
 
           <Button
-            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            className="bg-brend/80 hover:bg-brend text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
             onClick={() => {
               router.push('/artworks/register');
             }}

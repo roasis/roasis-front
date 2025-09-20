@@ -67,7 +67,7 @@ export default function CustomDropdown({
                   onSelect(option);
                   setIsOpen(false);
                 }}
-                className="px-4 py-2 text-white cursor-pointer hover:bg-[#E53E3E]"
+                className="px-4 py-2 text-white cursor-pointer hover:bg-[#009CF6]"
               >
                 {option}
               </li>
