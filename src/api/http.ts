@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const httpV1 = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + '/api/v1',
+  withCredentials: true,
 });
 
 httpV1.interceptors.request.use(
