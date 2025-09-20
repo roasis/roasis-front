@@ -19,10 +19,30 @@ export interface RegisterArtwork {
 }
 
 export interface Fragment {
-  id: string
-  position: number
-  price: number
-  status: "available" | "sold" | "reserved"
-  owner?: string
-  xrplTokenId?: string
+  id: string;
+  position: number;
+  price: number;
+  status: 'available' | 'sold' | 'reserved';
+  owner?: string;
+  xrplTokenId?: string;
+}
+
+export interface InviteArtistRequestDTO {
+  artist_wallet_address: string;
+}
+
+export interface InviteArtistResponseDTO {
+  message: string;
+  artist_id: number;
+  gallery_id: number;
+}
+
+export interface InviteArtist422ResponseDTO {
+  detail: [
+    {
+      loc: ['string', 0];
+      msg: 'string';
+      type: 'string';
+    }
+  ];
 }
