@@ -18,9 +18,9 @@ export default function Header() {
           <Link href="/marketplace" className="hover:text-gray-300">
             Marketplace
           </Link>
-          <Link href="/artists" className="hover:text-gray-300">
+          {/* <Link href="/artists" className="hover:text-gray-300">
             Artists
-          </Link>
+          </Link> */}
           <Link href="/galleries" className="hover:text-gray-300">
             Galleries
           </Link>

@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import Image from 'next/image';
 import type { NFTOwner } from '@/src/dto/artwork';
 import { cn } from '@/lib/utils';
@@ -20,29 +18,9 @@ export default function ImageGrid({
   selectedFragments,
   onFragmentClick,
 }: ImageGridProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const getStatusColor = (fragment: NFTOwner) => {
-    const isSelected = selectedFragments.some(
-      (sf) => sf.nftoken_id === fragment.nftoken_id
-    );
-    if (isSelected) {
-      return 'bg-green-500/70'; // Selected state
-    }
-    switch (fragment.status) {
-      case 'sold':
-        return 'bg-blue-500/50';
-      case 'minted':
-      default:
-        return 'bg-transparent hover:bg-green-500/50';
-    }
-  };
-
+  console.log({ gridSize, fragments, selectedFragments });
   return (
-    <div
-      className="relative w-full aspect-square rounded-lg overflow-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="relative w-full aspect-square rounded-lg overflow-hidden">
       <Image
         src={imageUrl}
         alt="Artwork Image"
@@ -50,32 +28,46 @@ export default function ImageGrid({
         objectFit="cover"
         className="rounded-lg"
       />
-      {isHovered && (
-        <div
-          className="absolute inset-0 grid rounded-lg overflow-hidden"
-          style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}
-        >
-          {fragments.map((fragment) => (
+      <div
+        className={`absolute inset-0 rounded-lg overflow-hidden hover:grid w-full h-full grid-cols-${gridSize} grid-rows-${gridSize}`}
+      >
+        {fragments.map((fragment) => {
+          console.log(
+            selectedFragments.find(
+              (sf) => sf.nftoken_id === fragment.nftoken_id
+            )
+          );
+          return (
             <div
               key={fragment.nftoken_id}
               className={cn(
-                `border border-white/20 flex items-center justify-center cursor-pointer`,
-                getStatusColor(fragment)
+                `group relative w-full h-full border border-white/20 flex items-center justify-center cursor-pointer`,
+                // 기본 배경색
+                !!selectedFragments.find(
+                  (sf) => sf.nftoken_id === fragment.nftoken_id
+                ) && 'bg-green-500/70',
+                // selectedFragments에 포함되지 않은 minted fragment만 transparent 적용
+                fragment.status === 'minted' &&
+                  !selectedFragments.find(
+                    (sf) => sf.nftoken_id === fragment.nftoken_id
+                  ) &&
+                  'bg-transparent',
+                // hover 시 배경색
+                fragment.status === 'minted' && 'hover:bg-green-500/50',
+                fragment.status === 'offered_to_artist' &&
+                  'hover:bg-blue-500/50'
               )}
-              onClick={() => {
-                console.log(fragment);
-                if (fragment.status === 'minted') {
-                  onFragmentClick(fragment);
-                }
-              }}
+              onClick={() => onFragmentClick(fragment)}
             >
-              {fragment.status === 'sold' && (
-                <span className="text-white font-bold text-sm">SOLD</span>
+              {fragment.status === 'offered_to_artist' && (
+                <span className="text-white font-bold text-sm hidden group-hover:block">
+                  SOLD
+                </span>
               )}
             </div>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 }

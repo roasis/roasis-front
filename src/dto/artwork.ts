@@ -76,13 +76,19 @@ export interface NFTOwner {
   tx_hash: string;
   owner_address: string;
   // status: 'offered_to_artist' | 'available' | 'sold' | 'reserved';
-  status: 'minted' | 'sold';
+  status: 'minted' | 'offered_to_artist';
   price: number;
-  extra: {
-    part_uri: string;
-    grid_index: number;
-    grid_total: number;
-  };
+}
+
+// Swagger API 명세에 맞춘 ArtworkListResponse 타입
+export interface ArtworkListResponseDTO {
+  id: number;
+  title: string;
+  size: string;
+  price_usd: number;
+  image_url: string;
+  artist_address: string;
+  created_at: string;
 }
 
 export interface ArtworkDetail {

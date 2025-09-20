@@ -21,7 +21,6 @@ export default function ArtworkDetailPage({
   const [artworkData, setArtworkData] = useState<ArtworkDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  console.log(selectedFragments);
 
   // API에서 작품 데이터 가져오기
   useEffect(() => {
@@ -51,13 +50,12 @@ export default function ArtworkDetailPage({
   }, [id]);
 
   const handleFragmentClick = (fragment: NFTOwner) => {
-    console.log(fragment);
     if (!session) {
       alert('지갑을 연동해주세요');
       return;
     }
     setSelectedFragments((prev) => {
-      const isAlreadySelected = prev.some(
+      const isAlreadySelected = prev.find(
         (sf) => sf.nftoken_id === fragment.nftoken_id
       );
       if (isAlreadySelected) {
@@ -99,7 +97,9 @@ export default function ArtworkDetailPage({
   // 실제로는 NFT 상태를 별도 API로 가져와야 함
   const fragments = artworkData.nfts;
 
-  const soldCount = fragments.filter((f) => f.status === 'sold').length;
+  const soldCount = fragments.filter(
+    (f) => f.status === 'offered_to_artist'
+  ).length;
   const totalFragments = artworkDetail.gridN * artworkDetail.gridN;
 
   return (

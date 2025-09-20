@@ -58,12 +58,12 @@ export default function PurchaseCard({
           <div className="flex justify-between items-center">
             <span className="text-gray-400">Selected Fragments</span>
             <div className="flex items-center gap-2">
-              {selectedFragments.map((f) => (
+              {selectedFragments.map((f, i) => (
                 <span
                   key={f.nftoken_id}
                   className="border border-gray-600 rounded-md px-2 py-1 text-xs"
                 >
-                  #{f.extra.grid_index}
+                  #{i + 1}
                 </span>
               ))}
               <span className="bg-green-500 text-black rounded-full px-2.5 py-1 text-xs font-bold">
