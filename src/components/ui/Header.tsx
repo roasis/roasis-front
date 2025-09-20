@@ -25,9 +25,11 @@ export default function Header() {
             Galleries
           </Link>
 
-          <Link href="/dashboard" className="hover:text-gray-300">
-            Dashboard
-          </Link>
+          {session && (
+            <Link href="/dashboard" className="hover:text-gray-300">
+              Dashboard
+            </Link>
+          )}
         </nav>
       </div>
       <div className="flex items-center space-x-4">
