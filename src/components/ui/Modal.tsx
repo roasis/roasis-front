@@ -16,7 +16,9 @@ export default function Modal({ children }: { children: React.ReactNode }) {
       className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
       onClick={handleOutsideClick}
     >
-      <div className="bg-transparent">{children}</div>
+      <div className="bg-transparent w-full flex justify-center items-center">
+        {children}
+      </div>
     </div>,
     document.body
   );

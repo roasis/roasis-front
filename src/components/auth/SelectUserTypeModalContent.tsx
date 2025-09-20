@@ -1,19 +1,24 @@
 'use client';
-import { useState } from 'react';
 import { useModal } from '@/src/hooks/useModal';
 import { Building2, User, X } from 'lucide-react';
 import UserTypeCard from './UserTypeCard';
 import { UserRole } from '@/src/dto/auth';
+import { useAuthStore } from '@/src/stores/authStore';
+import GeneralModalContent from './GeneralModalContent';
+import GalleryModalContent from './GalleryModalContent';
 
 export default function SelectUserTypeModalContent() {
-  const { closeModal } = useModal();
-  const [selectedType, setSelectedType] = useState<UserRole | null>(null);
+  const { closeModal, openModal } = useModal();
+  const { setSelectedUserType } = useAuthStore();
 
-  const handleUserTypeSelect = (type: UserRole) => {
-    setSelectedType(type);
-    // TODO: 실제 로그인 로직 구현
-    console.log('Selected user type:', type);
-    // closeModal(); // 로그인 성공 후 모달 닫기
+  const handleContinue = (type: UserRole) => {
+    setSelectedUserType(type);
+    // 사용자 타입에 따라 다음 모달 열기
+    if (type === UserRole.USER) {
+      openModal(<GeneralModalContent />);
+    } else if (type === UserRole.GALLERY) {
+      openModal(<GalleryModalContent />);
+    }
   };
 
   return (
@@ -38,33 +43,15 @@ export default function SelectUserTypeModalContent() {
           title="Gallery User"
           description="I manage a gallery"
           icon={<Building2 className="w-12 h-12 text-blue-500" />}
-          isSelected={selectedType === UserRole.GALLERY}
-          onClick={() => handleUserTypeSelect(UserRole.GALLERY)}
+          onClick={() => handleContinue(UserRole.GALLERY)}
         />
         <UserTypeCard
           title="General User"
           description="I collect or make artworks"
           icon={<User className="w-12 h-12 text-blue-500" />}
-          isSelected={selectedType === UserRole.USER}
-          onClick={() => handleUserTypeSelect(UserRole.USER)}
+          onClick={() => handleContinue(UserRole.USER)}
         />
       </div>
-
-      {/* Continue Button */}
-      {selectedType && (
-        <div className="mt-6">
-          <button
-            onClick={() => {
-              // TODO: 실제 로그인 로직 구현
-              console.log('Continue with:', selectedType);
-              closeModal();
-            }}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
-          >
-            Continue
-          </button>
-        </div>
-      )}
     </div>
   );
 }
