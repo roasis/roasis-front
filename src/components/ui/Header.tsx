@@ -18,9 +18,6 @@ export default function Header() {
           <Link href="/marketplace" className="hover:text-gray-300">
             Marketplace
           </Link>
-          <Link href="/collection" className="hover:text-gray-300">
-            My Collection
-          </Link>
           <Link href="/artists" className="hover:text-gray-300">
             Artists
           </Link>
