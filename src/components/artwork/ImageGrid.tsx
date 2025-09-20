@@ -39,7 +39,7 @@ export default function ImageGrid({
 
   return (
     <div
-      className="relative w-full aspect-square"
+      className="relative w-full aspect-square rounded-lg overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
