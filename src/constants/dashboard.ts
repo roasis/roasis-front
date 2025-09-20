@@ -1,4 +1,4 @@
-import { DashboardTabs } from '@/src/types/Dashboard';
+import { DashboardTabs } from '@/src/types/dashboard';
 
 export const DASHBOARD_TABS = [
   'Collection',

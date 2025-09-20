@@ -4,7 +4,7 @@ import { useState } from 'react';
 import KPICard from '@/src/components/dashboard/KPICard';
 import ArtworkCard from '@/src/components/dashboard/ArtworkCard';
 import TabNavigation from '@/src/components/dashboard/TabNavigation';
-import { DashboardTabs } from '@/src/types/Dashboard';
+import { DashboardTabs } from '@/src/types/dashboard';
 
 export default function GalleryDashboard() {
   const [activeTab, setActiveTab] = useState<DashboardTabs>('Collection');

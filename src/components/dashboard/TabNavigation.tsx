@@ -2,7 +2,7 @@
 
 import Button from '@/src/components/ui/Button';
 import { PlusIcon } from '@/src/components/icons';
-import { DashboardTabs } from '@/src/types/Dashboard';
+import { DashboardTabs } from '@/src/types/dashboard';
 import { DASHBOARD_TABS } from '@/src/constants/dashboard';
 
 interface TabNavigationProps {
