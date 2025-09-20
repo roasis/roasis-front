@@ -1,5 +1,4 @@
 import { BorderBeam } from '@/components/ui/border-beam';
-import { TypingAnimation } from '@/components/ui/typing-animation';
 import Link from 'next/link';
 
 export default function Home() {
