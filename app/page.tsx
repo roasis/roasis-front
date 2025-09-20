@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center text-center py-20">
       <div
-        className="w-full max-w-4xl mx-auto border border-gray-800 rounded-2xl p-16"
+        className="w-full max-w-6xl mx-auto border border-gray-800 rounded-2xl p-24"
         style={{
           backgroundImage: 'url(/Rectangle-home.png)',
           backgroundSize: 'cover',
@@ -16,9 +18,18 @@ export default function Home() {
           Discover and acquire authenticated artworks, <br />
           exclusively verified by the world's leading galleries.
         </p>
-        <button className="bg-[linear-gradient(to_right,#FF8DE6,#67C2FF,#A9FFC1,#E53E3E)] text-black font-bold py-3 px-8 rounded-full text-lg">
-          Explore the Marketplace
-        </button>
+        <Link href="marketplace">
+          <button
+            className="text-white font-bold py-3 px-21 rounded-full text-lg hover:shadow-xl/40 shadow-red-500/50"
+            style={{
+              backgroundImage: 'url(/pain.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            Explore the Marketplace
+          </button>
+        </Link>
       </div>
     </main>
   );
