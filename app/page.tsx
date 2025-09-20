@@ -23,7 +23,7 @@ export default function Home() {
         </p>
         <Link href="marketplace">
           <button
-            className="text-white font-bold py-3 px-21 rounded-full text-lg  hover:shadow-xl/40 shadow-red-500/50 "
+            className="text-white font-bold py-3 px-21 rounded-full text-lg hover:shadow-xl/40 shadow-red-500/50"
             style={{
               backgroundImage: 'url(/pain.png)',
               backgroundSize: 'cover',

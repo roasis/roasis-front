@@ -1,6 +1,7 @@
 'use client';
 import GalleryDashboard from '@/src/components/dashboard/GalleryDashboard';
 import GeneralDashboard from '@/src/components/dashboard/GeneralDashboard';
+
 import { useRole } from '@/src/hooks/useRole';
 
 export default function DashboardPage() {
