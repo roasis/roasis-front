@@ -1,6 +1,7 @@
 import { BorderBeam } from '@/components/ui/border-beam';
 import { Highlighter } from '@/components/ui/highlighter';
 import { Meteors } from '@/components/ui/meteors';
+
 import Link from 'next/link';
 
 export default function Home() {
