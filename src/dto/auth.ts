@@ -16,4 +16,8 @@ export interface AuthLogin422Response {
   ];
 }
 
-aaaa;
+export const enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+  GALLERY = 'gallery',
+}
