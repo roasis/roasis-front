@@ -28,7 +28,7 @@ export default function ImageGrid({
     }
     switch (fragment.status) {
       case 'sold':
-        return 'bg-brend/50';
+        return 'bg-blue-500/50';
       case 'reserved':
         return 'bg-yellow-500/50';
       case 'available':

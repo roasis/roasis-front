@@ -91,7 +91,7 @@ export default function PurchaseCard({
           <button
             className={`w-full font-bold py-3 rounded-lg ${
               hasSufficientBalance
-                ? 'bg-green-600 hover:bg-green-700'
+                ? 'bg-brend hover:bg-[#165dfc]'
                 : 'bg-gray-600 cursor-not-allowed'
             }`}
             disabled={!hasSufficientBalance}

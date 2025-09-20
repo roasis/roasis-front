@@ -47,13 +47,13 @@ export default function ArtworkDetailPage({
 
   const handleFragmentClick = (fragment: Fragment) => {
     if (!session) {
-      alert("지갑을 연동해주세요");
+      alert('지갑을 연동해주세요');
       return;
     }
-    setSelectedFragments(prev => {
-      const isAlreadySelected = prev.some(sf => sf.id === fragment.id);
+    setSelectedFragments((prev) => {
+      const isAlreadySelected = prev.some((sf) => sf.id === fragment.id);
       if (isAlreadySelected) {
-        return prev.filter(sf => sf.id !== fragment.id);
+        return prev.filter((sf) => sf.id !== fragment.id);
       } else {
         return [...prev, fragment];
       }
@@ -107,7 +107,7 @@ export default function ArtworkDetailPage({
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2.5">
                   <div
-                    className="bg-gray-400 h-2.5 rounded-full"
+                    className="bg-brend h-2.5 rounded-full"
                     style={{ width: `${(soldCount / totalFragments) * 100}%` }}
                   ></div>
                 </div>
@@ -140,11 +140,11 @@ export default function ArtworkDetailPage({
           </div>
 
           {/* Purchase Fragments */}
-                    <PurchaseCard 
-                      session={session || null}
-                      selectedFragments={selectedFragments}
-                      fragmentPrice={artworkDetail.fragmentPrice}
-                    />
+          <PurchaseCard
+            session={session || null}
+            selectedFragments={selectedFragments}
+            fragmentPrice={artworkDetail.fragmentPrice}
+          />
           {/* Transaction History */}
           <div className="bg-[#1A1A1A] rounded-lg p-6">
             <h2 className="text-xl font-bold mb-4">Transaction History</h2>
