@@ -6,10 +6,17 @@ import { UserRole } from '@/src/dto/auth';
 import { useAuthStore } from '@/src/stores/authStore';
 import GeneralModalContent from './GeneralModalContent';
 import GalleryModalContent from './GalleryModalContent';
+import { useDisconnect, useSession } from '@walletconnect/modal-sign-react';
+import { getSdkError } from '@walletconnect/utils';
 
 export default function SelectUserTypeModalContent() {
   const { closeModal, openModal } = useModal();
   const { setSelectedUserType } = useAuthStore();
+  const session = useSession();
+  const { disconnect } = useDisconnect({
+    topic: session?.topic || '',
+    reason: getSdkError('USER_DISCONNECTED'),
+  });
 
   const handleContinue = (type: UserRole) => {
     setSelectedUserType(type);
@@ -21,11 +28,24 @@ export default function SelectUserTypeModalContent() {
     }
   };
 
+  const handleCloseModal = async () => {
+    try {
+      // 모달을 닫기 전에 지갑 연결 해제
+      if (session) {
+        await disconnect();
+      }
+    } catch (error) {
+      console.error('Failed to disconnect wallet:', error);
+    } finally {
+      closeModal();
+    }
+  };
+
   return (
     <div className="relative bg-gray-900 border border-blue-500 rounded-lg p-8 max-w-md w-full mx-4">
       {/* Close Button */}
       <button
-        onClick={closeModal}
+        onClick={handleCloseModal}
         className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
       >
         <X className="w-6 h-6" />
