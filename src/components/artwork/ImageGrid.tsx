@@ -8,13 +8,19 @@ interface ImageGridProps {
   imageUrl: string;
   fragments: Fragment[];
   gridSize: number; // e.g., 3 for a 3x3 grid
+  selectedFragments: Fragment[];
+  onFragmentClick: (fragment: Fragment) => void;
 }
 
-export default function ImageGrid({ imageUrl, fragments, gridSize }: ImageGridProps) {
+export default function ImageGrid({ imageUrl, fragments, gridSize, selectedFragments, onFragmentClick }: ImageGridProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getStatusColor = (status: Fragment['status']) => {
-    switch (status) {
+  const getStatusColor = (fragment: Fragment) => {
+    const isSelected = selectedFragments.some(sf => sf.id === fragment.id);
+    if (isSelected) {
+      return 'bg-green-500/70'; // Selected state
+    }
+    switch (fragment.status) {
       case 'sold':
         return 'bg-red-500/50';
       case 'reserved':
@@ -46,7 +52,12 @@ export default function ImageGrid({ imageUrl, fragments, gridSize }: ImageGridPr
           {fragments.map((fragment) => (
             <div
               key={fragment.id}
-              className={`border border-white/20 flex items-center justify-center ${getStatusColor(fragment.status)}`}
+              className={`border border-white/20 flex items-center justify-center cursor-pointer ${getStatusColor(fragment)}`}
+              onClick={() => {
+                if (fragment.status === 'available') {
+                  onFragmentClick(fragment);
+                }
+              }}
             >
               {fragment.status === 'sold' && <span className="text-white font-bold text-sm">SOLD</span>}
             </div>
