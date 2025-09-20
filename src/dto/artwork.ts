@@ -27,6 +27,22 @@ export interface Fragment {
   xrplTokenId?: string;
 }
 
-export interface ArtistRegisterFormDTO {
-  artist_wallet_address: 'string';
+export interface InviteArtistRequestDTO {
+  artist_wallet_address: string;
+}
+
+export interface InviteArtistResponseDTO {
+  message: string;
+  artist_id: number;
+  gallery_id: number;
+}
+
+export interface InviteArtist422ResponseDTO {
+  detail: [
+    {
+      loc: ['string', 0];
+      msg: 'string';
+      type: 'string';
+    }
+  ];
 }

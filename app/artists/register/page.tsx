@@ -4,8 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Button from '@/src/components/ui/Button';
 import { useRouter } from 'next/navigation';
-import { registerGeneralUser } from '@/src/api/auth';
-import type { GeneralUserInfo } from '@/src/stores/authStore';
+import { inviteArtist } from '@/src/api/auth';
 
 export default function ArtistsRegisterPage() {
   const router = useRouter();
@@ -43,19 +42,15 @@ export default function ArtistsRegisterPage() {
     setIsSubmitting(true);
 
     try {
-      const userInfo: GeneralUserInfo = {
-        name: 'Artist', // 기본 이름
-        email: '',
-        imageUrl: '',
-      };
+      const response = await inviteArtist({
+        artist_wallet_address: walletAddress.trim(),
+      });
 
-      await registerGeneralUser(userInfo, walletAddress.trim());
-
-      alert('아티스트 등록이 성공적으로 완료되었습니다!');
+      alert(`아티스트 초대가 성공적으로 완료되었습니다!\n${response.message}`);
       router.push('/dashboard');
     } catch (err) {
-      console.error('Artist registration failed:', err);
-      setError('아티스트 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
+      console.error('Artist invitation failed:', err);
+      setError('아티스트 초대 중 오류가 발생했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
     }
@@ -85,17 +80,17 @@ export default function ArtistsRegisterPage() {
             </svg>
             대시보드로 돌아가기
           </Link>
-          <h1 className="text-3xl font-bold">아티스트 등록</h1>
-          <p className="text-gray-400 mt-2">
-            아티스트로서 활동하기 위한 프로필을 등록하세요
-          </p>
+          <h1 className="text-3xl font-bold">아티스트 초대</h1>
+          <p className="text-gray-400 mt-2">갤러리에 아티스트를 초대하세요</p>
         </div>
 
         <div className="max-w-2xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* 지갑 주소 입력 */}
             <div className="bg-gray-900 rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">아티스트 지갑 주소</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                초대할 아티스트 정보
+              </h2>
 
               <div className="space-y-4">
                 <div>
@@ -103,7 +98,7 @@ export default function ArtistsRegisterPage() {
                     htmlFor="walletAddress"
                     className="block text-sm font-medium mb-2"
                   >
-                    XRPL 지갑 주소 <span className="text-red-500">*</span>
+                    아티스트 지갑 주소 <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -116,8 +111,8 @@ export default function ArtistsRegisterPage() {
                     required
                   />
                   <p className="text-gray-400 text-sm mt-2">
-                    XRPL 네트워크의 지갑 주소를 입력해주세요. (r로 시작하는
-                    주소)
+                    초대할 아티스트의 XRPL 지갑 주소를 입력해주세요. (r로
+                    시작하는 주소)
                   </p>
                 </div>
               </div>
@@ -144,7 +139,7 @@ export default function ArtistsRegisterPage() {
                 className="flex-1 bg-blue-600/80 hover:bg-blue-600 text-white py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
               >
-                {isSubmitting ? '등록 중...' : '아티스트 등록'}
+                {isSubmitting ? '초대 중...' : '아티스트 초대'}
               </Button>
             </div>
           </form>
