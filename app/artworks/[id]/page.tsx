@@ -6,6 +6,7 @@ import ImageGrid from '@/src/components/artwork/ImageGrid';
 import PurchaseCard from '@/src/components/artwork/PurchaseCard';
 import { useState } from 'react';
 import { useSession } from '@walletconnect/modal-sign-react';
+import { BorderBeam } from '@/components/ui/border-beam';
 
 // Mock data for a single artwork - in a real app, you'd fetch this based on the `id` param
 const artworkDetail = {
@@ -72,6 +73,7 @@ export default function ArtworkDetailPage({
             selectedFragments={selectedFragments}
             onFragmentClick={handleFragmentClick}
           />
+
           <h1 className="text-4xl font-bold">{artworkDetail.title}</h1>
           <p className="text-gray-400 whitespace-pre-wrap">
             {artworkDetail.description}
@@ -95,7 +97,10 @@ export default function ArtworkDetailPage({
         {/* Right Column */}
         <div className="space-y-6">
           {/* Investment Overview */}
-          <div className="bg-[#1A1A1A] rounded-lg p-6">
+
+          <div className="bg-[#1A1A1A] rounded-lg p-6 relative">
+            <BorderBeam duration={16} size={240} />
+
             <h2 className="text-xl font-bold mb-4">Investment Overview</h2>
             <div className="space-y-4">
               <div>
@@ -108,7 +113,9 @@ export default function ArtworkDetailPage({
                 <div className="w-full bg-gray-700 rounded-full h-2.5">
                   <div
                     className="bg-brend h-2.5 rounded-full"
-                    style={{ width: `${(soldCount / totalFragments) * 100}%` }}
+                    style={{
+                      width: `${(soldCount / totalFragments) * 100}%`,
+                    }}
                   ></div>
                 </div>
               </div>
