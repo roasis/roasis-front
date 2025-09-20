@@ -1,10 +1,12 @@
 import { BorderBeam } from '@/components/ui/border-beam';
 import { Highlighter } from '@/components/ui/highlighter';
+import { Meteors } from '@/components/ui/meteors';
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center text-center py-20">
+      <Meteors />
       <div
         className="relative overflow-hidden w-full max-w-6xl mx-auto border border-gray-800 rounded-2xl p-24"
         style={{
