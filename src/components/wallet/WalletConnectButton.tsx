@@ -27,8 +27,8 @@ export default function WalletConnectButton() {
         }
     }
     return (
-        <Button onClick={onConnect} disabled={isConnecting}>
-            Wallet Connect
-        </Button>
+        <button onClick={onConnect} disabled={isConnecting} className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
+            Connect Wallet
+        </button>
     );
 }

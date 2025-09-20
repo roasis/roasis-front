@@ -20,8 +20,8 @@ export default function WalletDisconnectButton({ session }: { session: SessionTy
     };
 
     return (
-        <Button onClick={onDisconnect} disabled={isDisconnecting}>
-            Wallet Disconnect
-        </Button>
+        <button onClick={onDisconnect} disabled={isDisconnecting} className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
+            Disconnect
+        </button>
     );
 }
