@@ -4,7 +4,12 @@ import type {
   AuthLoginResponse,
   GalleryUserInfoResponse,
   GeneralUserInfoResponse,
+  UserInfoResponse,
 } from '@/src/dto/auth';
+import type {
+  InviteArtistRequestDTO,
+  InviteArtistResponseDTO,
+} from '@/src/dto/artwork';
 import { UserRole } from '@/src/dto/auth';
 import { GalleryUserInfo, GeneralUserInfo } from '../stores/authStore';
 import { AuthMapper } from '../mapper/auth';
@@ -61,4 +66,22 @@ export const registerUser = async (
   } else {
     return registerGeneralUser(userInfo as GeneralUserInfo, walletAddress);
   }
+};
+
+// 현재 사용자 정보 조회 API
+export const getCurrentUser = async (): Promise<UserInfoResponse> => {
+  const response = await http.get<UserInfoResponse>('/auth/me');
+  return response.data;
+};
+
+// 갤러리 아티스트 초대 API
+export const inviteArtist = async (
+  data: InviteArtistRequestDTO
+): Promise<InviteArtistResponseDTO> => {
+  console.log('inviteArtist data', data);
+  const response = await http.post<InviteArtistResponseDTO>(
+    '/galleries/invite-artist',
+    data
+  );
+  return response.data;
 };
