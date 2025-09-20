@@ -2,11 +2,12 @@ import axios from 'axios';
 
 const httpV1 = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + '/api/v1',
+  withCredentials: true,
 });
 
 httpV1.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('access_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

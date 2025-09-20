@@ -6,16 +6,27 @@ import Link from 'next/link';
 import Button from '@/src/components/ui/Button';
 import type { RegisterArtwork } from '@/src/dto/artwork';
 import { useRouter } from 'next/navigation';
+import { registerAndMintArtwork } from '@/src/api/artwork';
+import { useSession } from '@walletconnect/modal-sign-react';
+import { ArtworkMapper } from '@/src/mapper/artwork';
+import {
+  optimizeImageWithProgress,
+  validateImageFile,
+  createImagePreview,
+  type OptimizedImageResult,
+} from '@/src/utils/imageOptimizer';
 
 // TODO: form 필수 데이터 없을 때 매시지 표시
 export default function RegisterArtworkPage() {
   const router = useRouter();
+  const session = useSession();
+  const walletAddress = session?.namespaces.xrpl.accounts[1].split(':')[2];
   const [artworkData, setArtworkData] = useState<RegisterArtwork>({
     title: '',
     description: '',
     year: '',
     medium: '',
-    dimensions: '',
+    size: '',
     totalPrice: 0,
     count: 1,
     image: null,
@@ -23,6 +34,10 @@ export default function RegisterArtworkPage() {
 
   const [imagePreview, setImagePreview] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizationProgress, setOptimizationProgress] = useState(0);
+  const [_optimizedImageInfo, setOptimizedImageInfo] =
+    useState<OptimizedImageResult | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,15 +49,67 @@ export default function RegisterArtworkPage() {
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (!file) return;
+
+    // 이미지 파일 유효성 검사
+    const validation = validateImageFile(file, 20); // 최대 20MB
+    if (!validation.isValid) {
+      alert(validation.error);
+      return;
+    }
+
+    setIsOptimizing(true);
+    setOptimizationProgress(0);
+
+    try {
+      // 이미지 최적화
+      const optimizedResult = await optimizeImageWithProgress(
+        file,
+        {
+          maxWidth: 1920,
+          maxHeight: 1920,
+          quality: 0.8,
+          format: 'jpeg',
+          maintainAspectRatio: true,
+        },
+        (progress) => {
+          setOptimizationProgress(progress);
+        }
+      );
+
+      // 최적화된 이미지로 상태 업데이트
+      setArtworkData((prev) => ({ ...prev, image: optimizedResult.file }));
+      setOptimizedImageInfo(optimizedResult);
+
+      // 미리보기 생성
+      const previewUrl = await createImagePreview(optimizedResult.file);
+      setImagePreview(previewUrl);
+
+      // 최적화 결과 로그
+      console.log('이미지 최적화 완료:', {
+        원본크기: `${(optimizedResult.originalSize / 1024 / 1024).toFixed(
+          2
+        )}MB`,
+        최적화크기: `${(optimizedResult.optimizedSize / 1024 / 1024).toFixed(
+          2
+        )}MB`,
+        압축률: `${optimizedResult.compressionRatio}%`,
+        원본해상도: `${optimizedResult.dimensions.original.width}x${optimizedResult.dimensions.original.height}`,
+        최적화해상도: `${optimizedResult.dimensions.optimized.width}x${optimizedResult.dimensions.optimized.height}`,
+      });
+    } catch (error) {
+      console.error('이미지 최적화 실패:', error);
+      alert('이미지 최적화에 실패했습니다. 원본 이미지를 사용합니다.');
+
+      // 실패 시 원본 이미지 사용
       setArtworkData((prev) => ({ ...prev, image: file }));
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = await createImagePreview(file);
+      setImagePreview(previewUrl);
+    } finally {
+      setIsOptimizing(false);
+      setOptimizationProgress(0);
     }
   };
 
@@ -60,16 +127,42 @@ export default function RegisterArtworkPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!walletAddress) {
+      alert('지갑 주소가 없습니다. 먼저 지갑을 연결해주세요.');
+      return;
+    }
+
+    if (!artworkData.image) {
+      alert('작품 이미지를 업로드해주세요.');
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // 실제 구현에서는 API 호출
-    console.log('작품 등록 데이터:', artworkData);
+    try {
+      // ArtworkMapper를 사용하여 데이터 변환
+      const requestData = ArtworkMapper.toRegisterMintRequest(
+        artworkData,
+        walletAddress
+      );
 
-    // 임시로 2초 후 완료 처리
-    setTimeout(() => {
+      const response = await registerAndMintArtwork(requestData);
+
+      console.log('작품 등록 및 민팅 성공:', response);
+
+      // ArtworkMapper를 사용하여 성공 메시지 생성
+      const successMessage = ArtworkMapper.toSuccessMessage(response);
+      alert(successMessage);
+
+      // 성공 후 마켓플레이스로 이동
+      router.push('/marketplace');
+    } catch (error) {
+      console.error('작품 등록 실패:', error);
+      alert('작품 등록에 실패했습니다. 다시 시도해주세요.');
+    } finally {
       setIsSubmitting(false);
-      alert('작품이 성공적으로 등록되었습니다!');
-    }, 2000);
+    }
   };
 
   const totalPieces = artworkData.count ** 2;
@@ -123,6 +216,7 @@ export default function RegisterArtworkPage() {
                     onClick={() => {
                       setImagePreview('');
                       setArtworkData((prev) => ({ ...prev, image: null }));
+                      setOptimizedImageInfo(null);
                     }}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-2"
                   >
@@ -159,7 +253,24 @@ export default function RegisterArtworkPage() {
                   <p className="text-lg font-medium mb-2">작품 이미지 업로드</p>
                   <p className="text-gray-400 mb-4">
                     최소 300dpi의 고해상도 이미지를 업로드하세요
+                    <br />
+                    <span className="text-sm">(자동으로 최적화됩니다)</span>
                   </p>
+
+                  {/* 최적화 진행률 표시 */}
+                  {isOptimizing && (
+                    <div className="mb-4">
+                      <div className="bg-gray-700 rounded-full h-2 mb-2">
+                        <div
+                          className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${optimizationProgress}%` }}
+                        ></div>
+                      </div>
+                      <p className="text-sm text-gray-400">
+                        이미지 최적화 중... {optimizationProgress}%
+                      </p>
+                    </div>
+                  )}
                   <input
                     type="file"
                     accept="image/*"
@@ -170,9 +281,13 @@ export default function RegisterArtworkPage() {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="inline-block bg-brend/80 hover:bg-brend text-white px-6 py-3 rounded-lg cursor-pointer transition-colors"
+                    className={`inline-block bg-brend/80 hover:bg-brend text-white px-6 py-3 rounded-lg transition-colors ${
+                      isOptimizing
+                        ? 'cursor-not-allowed opacity-50'
+                        : 'cursor-pointer'
+                    }`}
                   >
-                    이미지 선택
+                    {isOptimizing ? '최적화 중...' : '이미지 선택'}
                   </label>
                 </div>
               )}
@@ -267,16 +382,16 @@ export default function RegisterArtworkPage() {
 
                   <div>
                     <label
-                      htmlFor="dimensions"
+                      htmlFor="size"
                       className="block text-sm font-medium mb-2"
                     >
                       크기 <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
-                      id="dimensions"
-                      name="dimensions"
-                      value={artworkData.dimensions}
+                      id="size"
+                      name="size"
+                      value={artworkData.size}
                       onChange={handleInputChange}
                       placeholder="예: 40cm x 60cm"
                       className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
