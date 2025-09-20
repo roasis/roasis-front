@@ -4,14 +4,16 @@ import { useState } from 'react';
 import KPICard from '@/src/components/dashboard/KPICard';
 import ArtworkCard from '@/src/components/dashboard/ArtworkCard';
 import TabNavigation from '@/src/components/dashboard/TabNavigation';
-import { GalleryDashboardTabs } from '@/src/types/dashboard';
-import Button from '@/src/components/ui/Button';
-import { PlusIcon } from '@/src/components/icons';
-import { GALLERY_DASHBOARD_TABS } from '@/src/constants/dashboard';
+import { GeneralDashboardTabs } from '@/src/types/dashboard';
+import Button from '../ui/Button';
+import { PlusIcon } from '../icons';
+import { GENERAL_DASHBOARD_TABS } from '@/src/constants/dashboard';
+import { useRouter } from 'next/navigation';
 
-export default function GalleryDashboard() {
+export default function GeneralDashboard() {
   const [activeTab, setActiveTab] =
-    useState<GalleryDashboardTabs>('Collection');
+    useState<GeneralDashboardTabs>('Collection');
+  const router = useRouter();
 
   // 샘플 데이터 - 실제로는 API에서 가져올 데이터
   const kpiData = [
@@ -97,14 +99,19 @@ export default function GalleryDashboard() {
         {/* Tab Navigation */}
         <div className="flex items-center justify-between mb-8">
           <TabNavigation
-            tabs={GALLERY_DASHBOARD_TABS}
+            tabs={GENERAL_DASHBOARD_TABS}
             activeTab={activeTab}
             onTabChange={setActiveTab}
           />
 
-          <Button className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+          <Button
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            onClick={() => {
+              router.push('/artworks/register');
+            }}
+          >
             <PlusIcon />
-            <span>Invite New Artist</span>
+            <span>Add New Artwork</span>
           </Button>
         </div>
 
@@ -131,13 +138,11 @@ export default function GalleryDashboard() {
           </div>
         )}
 
-        {activeTab === 'Artist Analysis' && (
+        {activeTab === 'My Artworks' && (
           <div className="text-center py-12">
-            <h2 className="text-2xl font-bold text-white mb-4">
-              Artist Analysis
-            </h2>
+            <h2 className="text-2xl font-bold text-white mb-4">My Artworks</h2>
             <p className="text-gray-400">
-              Artist analysis content will be displayed here.
+              My artworks content will be displayed here.
             </p>
           </div>
         )}

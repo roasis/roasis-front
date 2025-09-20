@@ -34,11 +34,7 @@ const soldCount = artworkDetail.fragments.filter(
 ).length;
 const totalFragments = artworkDetail.gridSize * artworkDetail.gridSize;
 
-export default function ArtworkDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function ArtworkDetailPage({ params: _params }: { params: { id: string } }) {
   // You can use params.id to fetch the real data
 
   return (
