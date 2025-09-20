@@ -10,13 +10,17 @@ interface ImageGridProps {
   gridSize: number; // e.g., 3 for a 3x3 grid
 }
 
-export default function ImageGrid({ imageUrl, fragments, gridSize }: ImageGridProps) {
+export default function ImageGrid({
+  imageUrl,
+  fragments,
+  gridSize,
+}: ImageGridProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const getStatusColor = (status: Fragment['status']) => {
     switch (status) {
       case 'sold':
-        return 'bg-red-500/50';
+        return 'bg-brend/50';
       case 'reserved':
         return 'bg-yellow-500/50';
       case 'available':
@@ -46,9 +50,13 @@ export default function ImageGrid({ imageUrl, fragments, gridSize }: ImageGridPr
           {fragments.map((fragment) => (
             <div
               key={fragment.id}
-              className={`border border-white/20 flex items-center justify-center ${getStatusColor(fragment.status)}`}
+              className={`border border-white/20 flex items-center justify-center ${getStatusColor(
+                fragment.status
+              )}`}
             >
-              {fragment.status === 'sold' && <span className="text-white font-bold text-sm">SOLD</span>}
+              {fragment.status === 'sold' && (
+                <span className="text-white font-bold text-sm">SOLD</span>
+              )}
             </div>
           ))}
         </div>
