@@ -4,6 +4,7 @@ import type {
   AuthLoginResponse,
   GalleryUserInfoResponse,
   GeneralUserInfoResponse,
+  UserInfoResponse,
 } from '@/src/dto/auth';
 import { UserRole } from '@/src/dto/auth';
 import { GalleryUserInfo, GeneralUserInfo } from '../stores/authStore';
@@ -61,4 +62,10 @@ export const registerUser = async (
   } else {
     return registerGeneralUser(userInfo as GeneralUserInfo, walletAddress);
   }
+};
+
+// 현재 사용자 정보 조회 API
+export const getCurrentUser = async (): Promise<UserInfoResponse> => {
+  const response = await http.get<UserInfoResponse>('/auth/me');
+  return response.data;
 };
