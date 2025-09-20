@@ -2,14 +2,15 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import type { Fragment } from '@/src/dto/artwork';
+import type { NFTOwner } from '@/src/dto/artwork';
+import { cn } from '@/lib/utils';
 
 interface ImageGridProps {
   imageUrl: string;
-  fragments: Fragment[];
+  fragments: NFTOwner[];
   gridSize: number; // e.g., 3 for a 3x3 grid
-  selectedFragments: Fragment[];
-  onFragmentClick: (fragment: Fragment) => void;
+  selectedFragments: NFTOwner[];
+  onFragmentClick: (fragment: NFTOwner) => void;
 }
 
 export default function ImageGrid({
@@ -20,18 +21,17 @@ export default function ImageGrid({
   onFragmentClick,
 }: ImageGridProps) {
   const [isHovered, setIsHovered] = useState(false);
-
-  const getStatusColor = (fragment: Fragment) => {
-    const isSelected = selectedFragments.some((sf) => sf.id === fragment.id);
+  const getStatusColor = (fragment: NFTOwner) => {
+    const isSelected = selectedFragments.some(
+      (sf) => sf.nftoken_id === fragment.nftoken_id
+    );
     if (isSelected) {
       return 'bg-green-500/70'; // Selected state
     }
     switch (fragment.status) {
       case 'sold':
         return 'bg-blue-500/50';
-      case 'reserved':
-        return 'bg-yellow-500/50';
-      case 'available':
+      case 'minted':
       default:
         return 'bg-transparent hover:bg-green-500/50';
     }
@@ -57,12 +57,14 @@ export default function ImageGrid({
         >
           {fragments.map((fragment) => (
             <div
-              key={fragment.id}
-              className={`border border-white/20 flex items-center justify-center cursor-pointer ${getStatusColor(
-                fragment
-              )}`}
+              key={fragment.nftoken_id}
+              className={cn(
+                `border border-white/20 flex items-center justify-center cursor-pointer`,
+                getStatusColor(fragment)
+              )}
               onClick={() => {
-                if (fragment.status === 'available') {
+                console.log(fragment);
+                if (fragment.status === 'minted') {
                   onFragmentClick(fragment);
                 }
               }}

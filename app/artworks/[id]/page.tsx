@@ -1,65 +1,106 @@
 'use client';
 
 import Image from 'next/image';
-import { Fragment } from '@/src/dto/artwork';
 import ImageGrid from '@/src/components/artwork/ImageGrid';
 import PurchaseCard from '@/src/components/artwork/PurchaseCard';
-import { useState } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useSession } from '@walletconnect/modal-sign-react';
 import { BorderBeam } from '@/components/ui/border-beam';
-
-// Mock data for a single artwork - in a real app, you'd fetch this based on the `id` param
-const artworkDetail = {
-  id: 1,
-  title: 'Meow',
-  description: 'Artwork Description wow!!',
-  imageUrl: '/cat.jpg',
-  medium: 'by Kimkim',
-  year: '2025',
-  dimensions: '40" X 60"',
-  totalValue: 18000,
-  fragmentPrice: 2000,
-  gridSize: 3,
-  fragments: [
-    { id: '1', position: 1, price: 2000, status: 'sold' },
-    { id: '2', position: 2, price: 2000, status: 'sold' },
-    { id: '3', position: 3, price: 2000, status: 'available' },
-    { id: '4', position: 4, price: 2000, status: 'sold' },
-    { id: '5', position: 5, price: 2000, status: 'available' },
-    { id: '6', position: 6, price: 2000, status: 'sold' },
-    { id: '7', position: 7, price: 2000, status: 'sold' },
-    { id: '8', position: 8, price: 2000, status: 'sold' },
-    { id: '9', position: 9, price: 2000, status: 'available' },
-  ] as Fragment[],
-};
-
-const soldCount = artworkDetail.fragments.filter(
-  (f) => f.status === 'sold'
-).length;
-const totalFragments = artworkDetail.gridSize * artworkDetail.gridSize;
+import { getArtwork } from '@/src/api/artwork';
+import type { ArtworkDetail, NFTOwner } from '@/src/dto/artwork';
+import { ArtworkMapper } from '@/src/mapper/artwork';
 
 export default function ArtworkDetailPage({
-  params: _params,
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const session = useSession();
-  const [selectedFragments, setSelectedFragments] = useState<Fragment[]>([]);
+  const [selectedFragments, setSelectedFragments] = useState<NFTOwner[]>([]);
+  const [artworkData, setArtworkData] = useState<ArtworkDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  console.log(selectedFragments);
 
-  const handleFragmentClick = (fragment: Fragment) => {
+  // API에서 작품 데이터 가져오기
+  useEffect(() => {
+    const fetchArtwork = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const artworkId = ArtworkMapper.parseArtworkId(id);
+        if (!artworkId) {
+          throw new Error('Invalid artwork ID');
+        }
+
+        const data = await getArtwork(artworkId);
+        setArtworkData(data);
+      } catch (err) {
+        console.error('Failed to fetch artwork:', err);
+        setError(
+          err instanceof Error ? err.message : 'Failed to fetch artwork'
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArtwork();
+  }, [id]);
+
+  const handleFragmentClick = (fragment: NFTOwner) => {
+    console.log(fragment);
     if (!session) {
       alert('지갑을 연동해주세요');
       return;
     }
     setSelectedFragments((prev) => {
-      const isAlreadySelected = prev.some((sf) => sf.id === fragment.id);
+      const isAlreadySelected = prev.some(
+        (sf) => sf.nftoken_id === fragment.nftoken_id
+      );
       if (isAlreadySelected) {
-        return prev.filter((sf) => sf.id !== fragment.id);
+        return prev.filter((sf) => sf.nftoken_id !== fragment.nftoken_id);
       } else {
         return [...prev, fragment];
       }
     });
   };
+
+  // 로딩 상태
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#080808] text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-gray-400">작품 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태
+  if (error || !artworkData) {
+    return (
+      <div className="min-h-screen bg-[#080808] text-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 mb-4">작품을 불러올 수 없습니다</p>
+          <p className="text-gray-400">{error || 'Unknown error'}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // API 데이터를 mapper를 통해 변환
+  const artworkDetail = ArtworkMapper.toArtworkDetail(artworkData);
+
+  // API 데이터를 기반으로 fragments 생성 (임시로 모든 fragment를 available로 설정)
+  // 실제로는 NFT 상태를 별도 API로 가져와야 함
+  const fragments = artworkData.nfts;
+
+  const soldCount = fragments.filter((f) => f.status === 'sold').length;
+  const totalFragments = artworkDetail.gridN * artworkDetail.gridN;
 
   return (
     <div className="min-h-screen bg-[#080808] text-white p-8">
@@ -67,9 +108,10 @@ export default function ArtworkDetailPage({
         {/* Left Column */}
         <div className="space-y-6">
           <ImageGrid
-            imageUrl={artworkDetail.imageUrl}
-            fragments={artworkDetail.fragments}
-            gridSize={artworkDetail.gridSize}
+            // imageUrl={artworkDetail.imageUrl}
+            imageUrl={'/cat.jpg'}
+            fragments={fragments}
+            gridSize={artworkDetail.gridN}
             selectedFragments={selectedFragments}
             onFragmentClick={handleFragmentClick}
           />
@@ -80,16 +122,18 @@ export default function ArtworkDetailPage({
           </p>
           <div className="flex justify-between items-center border-t border-b border-gray-700 py-4">
             <div>
-              <p className="text-sm text-gray-400">Medium</p>
-              <p className="font-medium">{artworkDetail.medium}</p>
+              <p className="text-sm text-gray-400">Size</p>
+              <p className="font-medium">{artworkDetail.size}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Year</p>
-              <p className="font-medium">{artworkDetail.year}</p>
+              <p className="text-sm text-gray-400">Artist</p>
+              <p className="font-medium">{artworkDetail.artistAddress}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Dimensions</p>
-              <p className="font-medium">{artworkDetail.dimensions}</p>
+              <p className="text-sm text-gray-400">Created</p>
+              <p className="font-medium">
+                {new Date(artworkDetail.createdAt).toLocaleDateString('ko-KR')}
+              </p>
             </div>
           </div>
         </div>
@@ -134,13 +178,13 @@ export default function ArtworkDetailPage({
               <div className="border-t border-gray-700 pt-4 flex justify-between">
                 <span className="text-gray-400">Total Value</span>
                 <span className="font-bold">
-                  {artworkDetail.totalValue.toLocaleString()} RLUSD
+                  ${artworkDetail.priceInDollars.toLocaleString()} USD
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Fragment Price</span>
                 <span className="font-bold">
-                  {artworkDetail.fragmentPrice.toLocaleString()} RLUSD
+                  ${artworkDetail.fragmentPriceInDollars.toLocaleString()} USD
                 </span>
               </div>
             </div>
@@ -157,12 +201,18 @@ export default function ArtworkDetailPage({
             <h2 className="text-xl font-bold mb-4">Transaction History</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-400">Minted</span>
-                <span>2025. 8. 10</span>
+                <span className="text-gray-400">Created</span>
+                <span>
+                  {new Date(artworkDetail.createdAt).toLocaleDateString(
+                    'ko-KR'
+                  )}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Listed</span>
-                <span>2025. 9. 22</span>
+                <span className="text-gray-400">Metadata URI</span>
+                <span className="text-xs text-gray-500 truncate max-w-[200px]">
+                  {artworkDetail.metadataUriBase}
+                </span>
               </div>
             </div>
           </div>

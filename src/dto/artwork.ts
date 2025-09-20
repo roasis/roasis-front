@@ -75,7 +75,8 @@ export interface NFTOwner {
   nftoken_id: string;
   tx_hash: string;
   owner_address: string;
-  status: 'offered_to_artist' | 'available' | 'sold' | 'reserved';
+  // status: 'offered_to_artist' | 'available' | 'sold' | 'reserved';
+  status: 'minted' | 'sold';
   price: number;
   extra: {
     part_uri: string;

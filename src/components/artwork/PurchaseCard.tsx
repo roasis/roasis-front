@@ -96,6 +96,7 @@ export default function PurchaseCard({
           <PurchaseCardButton
             session={session}
             hasSufficientBalance={hasSufficientBalance}
+            fragments={selectedFragments}
           />
         </div>
       ) : (
