@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { Fragment } from '@/src/dto/artwork';
 import ImageGrid from '@/src/components/artwork/ImageGrid';
+import PurchaseCard from '@/src/components/artwork/PurchaseCard';
+import { useState } from 'react';
+import { useSession } from '@walletconnect/modal-sign-react';
 
 // Mock data for a single artwork - in a real app, you'd fetch this based on the `id` param
 const artworkDetail = {
@@ -34,8 +37,28 @@ const soldCount = artworkDetail.fragments.filter(
 ).length;
 const totalFragments = artworkDetail.gridSize * artworkDetail.gridSize;
 
-export default function ArtworkDetailPage({ params: _params }: { params: { id: string } }) {
-  // You can use params.id to fetch the real data
+export default function ArtworkDetailPage({
+  params: _params,
+}: {
+  params: { id: string };
+}) {
+  const session = useSession();
+  const [selectedFragments, setSelectedFragments] = useState<Fragment[]>([]);
+
+  const handleFragmentClick = (fragment: Fragment) => {
+    if (!session) {
+      alert('지갑을 연동해주세요');
+      return;
+    }
+    setSelectedFragments((prev) => {
+      const isAlreadySelected = prev.some((sf) => sf.id === fragment.id);
+      if (isAlreadySelected) {
+        return prev.filter((sf) => sf.id !== fragment.id);
+      } else {
+        return [...prev, fragment];
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#080808] text-white p-8">
@@ -46,6 +69,8 @@ export default function ArtworkDetailPage({ params: _params }: { params: { id: s
             imageUrl={artworkDetail.imageUrl}
             fragments={artworkDetail.fragments}
             gridSize={artworkDetail.gridSize}
+            selectedFragments={selectedFragments}
+            onFragmentClick={handleFragmentClick}
           />
           <h1 className="text-4xl font-bold">{artworkDetail.title}</h1>
           <p className="text-gray-400 whitespace-pre-wrap">
@@ -82,7 +107,7 @@ export default function ArtworkDetailPage({ params: _params }: { params: { id: s
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2.5">
                   <div
-                    className="bg-gray-400 h-2.5 rounded-full"
+                    className="bg-brend h-2.5 rounded-full"
                     style={{ width: `${(soldCount / totalFragments) * 100}%` }}
                   ></div>
                 </div>
@@ -115,16 +140,11 @@ export default function ArtworkDetailPage({ params: _params }: { params: { id: s
           </div>
 
           {/* Purchase Fragments */}
-          <div className="bg-[#1A1A1A] rounded-lg p-6">
-            <h2 className="text-xl font-bold mb-2">Purchase Fragments</h2>
-            <p className="text-gray-400 text-sm mb-4">
-              Select fragments to invest in this artwork
-            </p>
-            <p className="text-center text-gray-500 py-4">
-              Click on available (green) fragments to select them
-            </p>
-          </div>
-
+          <PurchaseCard
+            session={session || null}
+            selectedFragments={selectedFragments}
+            fragmentPrice={artworkDetail.fragmentPrice}
+          />
           {/* Transaction History */}
           <div className="bg-[#1A1A1A] rounded-lg p-6">
             <h2 className="text-xl font-bold mb-4">Transaction History</h2>
