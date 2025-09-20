@@ -27,7 +27,6 @@ export interface Fragment {
   xrplTokenId?: string;
 }
 
-// Register and Mint API Types
 export interface RegisterMintRequestDTO {
   image: File;
   title: string;
@@ -55,4 +54,24 @@ export interface RegisterMintResponseDTO {
   tx_hashes: string[];
   nftoken_ids: (string | null)[];
   status: string;
+}
+
+export interface InviteArtistRequestDTO {
+  artist_wallet_address: string;
+}
+
+export interface InviteArtistResponseDTO {
+  message: string;
+  artist_id: number;
+  gallery_id: number;
+}
+
+export interface InviteArtist422ResponseDTO {
+  detail: [
+    {
+      loc: ['string', 0];
+      msg: 'string';
+      type: 'string';
+    }
+  ];
 }
