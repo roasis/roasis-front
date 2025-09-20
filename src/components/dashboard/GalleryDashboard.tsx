@@ -8,11 +8,11 @@ import { GalleryDashboardTabs } from '@/src/types/dashboard';
 import Button from '@/src/components/ui/Button';
 import { PlusIcon } from '@/src/components/icons';
 import { GALLERY_DASHBOARD_TABS } from '@/src/constants/dashboard';
-
+import { useRouter } from 'next/navigation';
 export default function GalleryDashboard() {
   const [activeTab, setActiveTab] =
     useState<GalleryDashboardTabs>('Collection');
-
+  const router = useRouter();
   // 샘플 데이터 - 실제로는 API에서 가져올 데이터
   const kpiData = [
     {
@@ -102,7 +102,12 @@ export default function GalleryDashboard() {
             onTabChange={setActiveTab}
           />
 
-          <Button className="bg-brend/80 hover:bg-brend text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+          <Button
+            className="bg-brend/80 hover:bg-brend text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            onClick={() => {
+              router.push('/artists/register');
+            }}
+          >
             <PlusIcon />
             <span>Invite New Artist</span>
           </Button>
