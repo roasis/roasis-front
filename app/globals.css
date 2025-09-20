@@ -142,7 +142,16 @@ button {
     opacity: 0;
     }
   }
-}
+  --animate-background-position-spin: background-position-spin 3000ms infinite alternate
+;
+  @keyframes background-position-spin {
+  0% {
+    background-position: top center;
+    }
+  100% {
+    background-position: bottom center;
+    }
+  }}
 
 .dark {
   --background: oklch(0.145 0 0);
