@@ -192,7 +192,7 @@ export default function RegisterArtworkPage() {
                       htmlFor="title"
                       className="block text-sm font-medium mb-2"
                     >
-                      작품명 *
+                      작품명 <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -211,7 +211,7 @@ export default function RegisterArtworkPage() {
                       htmlFor="description"
                       className="block text-sm font-medium mb-2"
                     >
-                      작품 설명 *
+                      작품 설명 <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       id="description"
@@ -231,7 +231,7 @@ export default function RegisterArtworkPage() {
                         htmlFor="year"
                         className="block text-sm font-medium mb-2"
                       >
-                        제작 연도 *
+                        제작 연도 <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -250,7 +250,7 @@ export default function RegisterArtworkPage() {
                         htmlFor="medium"
                         className="block text-sm font-medium mb-2"
                       >
-                        재료 *
+                        재료 <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -270,7 +270,7 @@ export default function RegisterArtworkPage() {
                       htmlFor="dimensions"
                       className="block text-sm font-medium mb-2"
                     >
-                      크기 *
+                      크기 <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -298,7 +298,7 @@ export default function RegisterArtworkPage() {
                       htmlFor="totalPrice"
                       className="block text-sm font-medium mb-2"
                     >
-                      전체 가격 (원) *
+                      전체 가격 (RLUSD) <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="number"
@@ -315,7 +315,7 @@ export default function RegisterArtworkPage() {
 
                   <div>
                     <label className="block text-sm font-medium mb-2">
-                      조각투자 옵션 *
+                      조각투자 옵션 <span className="text-red-500">*</span>
                     </label>
                     <div>
                       <label
@@ -354,7 +354,7 @@ export default function RegisterArtworkPage() {
                         <div className="flex justify-between">
                           <span>전체 가격:</span>
                           <span className="font-medium">
-                            {artworkData.totalPrice.toLocaleString()}원
+                            {artworkData.totalPrice.toLocaleString()} RLUSD
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -364,7 +364,7 @@ export default function RegisterArtworkPage() {
                         <div className="flex justify-between text-blue-300">
                           <span>조각당 가격:</span>
                           <span className="font-bold">
-                            {Math.round(piecePrice).toLocaleString()}원
+                            {Math.round(piecePrice).toLocaleString()} RLUSD
                           </span>
                         </div>
                       </div>

@@ -1,8 +1,18 @@
 'use client';
 import { useConnect } from '@walletconnect/modal-sign-react';
 import Button from '@/src/components/ui/Button';
+import { useState } from 'react';
+import { useLogin } from '@/src/hooks/useLogin';
+import SelectUserTypeModalContent from '../auth/SelectUserTypeModalContent';
+import { useModal } from '@/src/hooks/useModal';
+import { AxiosError } from 'axios';
+import { useAuthStore } from '@/src/stores/authStore';
 
 export default function WalletConnectButton() {
+  const [_account, setAccount] = useState<string | null>(null);
+  const { login } = useLogin();
+  const setWalletAddress = useAuthStore((state) => state.setWalletAddress);
+  const { openModal } = useModal();
   const { connect, loading: isConnecting } = useConnect({
     requiredNamespaces: {
       xrpl: {
@@ -21,11 +31,20 @@ export default function WalletConnectButton() {
   async function onConnect() {
     try {
       const session = await connect();
+      const account = session.namespaces.xrpl.accounts[1].split(':')[2];
+      setWalletAddress(account);
+      setAccount(account);
+      await login({ account });
       console.info('connect result', session);
     } catch (err) {
       console.error(err);
+      if (err instanceof AxiosError && err.response?.status === 403) {
+        console.log('Opening SelectUserTypeModal due to 403 error');
+        openModal(<SelectUserTypeModalContent />);
+      }
     }
   }
+
   return (
     <Button
       onClick={onConnect}
