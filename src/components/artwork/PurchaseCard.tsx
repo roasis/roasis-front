@@ -1,20 +1,25 @@
 'use client';
 
-import { Fragment } from '@/src/dto/artwork';
+import { NFTOwner } from '@/src/dto/artwork';
 import { SessionTypes } from '@walletconnect/types';
 import { Wallet } from 'lucide-react';
+import PurchaseCardButton from './PurchaseCardButton';
 
 interface PurchaseCardProps {
   session: SessionTypes.Struct | null;
-  selectedFragments: Fragment[];
+  selectedFragments: NFTOwner[];
   fragmentPrice: number;
 }
+
+// const network = 'xrpl:1'; // xrpl:0, xrpl:1
 
 export default function PurchaseCard({
   session,
   selectedFragments,
   fragmentPrice,
 }: PurchaseCardProps) {
+  // TODO: balance 조회
+
   if (!session) {
     return (
       <div className="bg-[#1A1A1A] rounded-lg p-6">
@@ -55,10 +60,10 @@ export default function PurchaseCard({
             <div className="flex items-center gap-2">
               {selectedFragments.map((f) => (
                 <span
-                  key={f.id}
+                  key={f.nftoken_id}
                   className="border border-gray-600 rounded-md px-2 py-1 text-xs"
                 >
-                  #{f.position}
+                  #{f.extra.grid_index}
                 </span>
               ))}
               <span className="bg-green-500 text-black rounded-full px-2.5 py-1 text-xs font-bold">
@@ -88,16 +93,10 @@ export default function PurchaseCard({
             </div>
           )}
 
-          <button
-            className={`w-full font-bold py-3 rounded-lg ${
-              hasSufficientBalance
-                ? 'bg-brend hover:bg-[#165dfc]'
-                : 'bg-gray-600 cursor-not-allowed'
-            }`}
-            disabled={!hasSufficientBalance}
-          >
-            {hasSufficientBalance ? 'Own Now' : 'Purchase with XRPL'}
-          </button>
+          <PurchaseCardButton
+            session={session}
+            hasSufficientBalance={hasSufficientBalance}
+          />
         </div>
       ) : (
         <p className="text-center text-gray-500 py-4">

@@ -18,15 +18,6 @@ export interface RegisterArtwork {
   image: File | null;
 }
 
-export interface Fragment {
-  id: string;
-  position: number;
-  price: number;
-  status: 'available' | 'sold' | 'reserved';
-  owner?: string;
-  xrplTokenId?: string;
-}
-
 export interface RegisterMintRequestDTO {
   image: File;
   title: string;
@@ -74,4 +65,35 @@ export interface InviteArtist422ResponseDTO {
       type: 'string';
     }
   ];
+}
+
+// NFT 관련 타입들
+export interface NFTOwner {
+  id: number;
+  artwork_id: number;
+  uri_hex: string;
+  nftoken_id: string;
+  tx_hash: string;
+  owner_address: string;
+  status: 'offered_to_artist' | 'available' | 'sold' | 'reserved';
+  price: number;
+  extra: {
+    part_uri: string;
+    grid_index: number;
+    grid_total: number;
+  };
+}
+
+export interface ArtworkDetail {
+  id: number;
+  title: string;
+  description: string;
+  size: string;
+  price_usd: number;
+  grid_n: number;
+  image_url: string;
+  metadata_uri_base: string;
+  artist_address: string;
+  created_at: string;
+  nfts: NFTOwner[];
 }
