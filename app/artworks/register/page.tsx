@@ -156,7 +156,7 @@ export default function RegisterArtworkPage() {
       alert(successMessage);
 
       // 성공 후 마켓플레이스로 이동
-      router.push('/marketplace');
+      router.push(`/artworks/${response.artwork_id}`);
     } catch (error) {
       console.error('작품 등록 실패:', error);
       alert('작품 등록에 실패했습니다. 다시 시도해주세요.');
@@ -278,6 +278,7 @@ export default function RegisterArtworkPage() {
                     className="hidden"
                     id="image-upload"
                     required
+                    disabled={isOptimizing}
                   />
                   <label
                     htmlFor="image-upload"
@@ -479,7 +480,7 @@ export default function RegisterArtworkPage() {
                         <div className="flex justify-between text-blue-300">
                           <span>조각당 가격:</span>
                           <span className="font-bold">
-                            {Math.round(piecePrice).toLocaleString()} RLUSD
+                            {parseFloat(piecePrice.toFixed(6))} RLUSD
                           </span>
                         </div>
                       </div>
