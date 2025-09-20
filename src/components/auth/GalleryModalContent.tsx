@@ -5,12 +5,19 @@ import { useAuthStore } from '@/src/stores/authStore';
 import { X, ArrowLeft } from 'lucide-react';
 import SelectUserTypeModalContent from './SelectUserTypeModalContent';
 import { registerUser } from '@/src/api/auth';
+import { useDisconnect, useSession } from '@walletconnect/modal-sign-react';
+import { getSdkError } from '@walletconnect/utils';
 
 export default function GalleryModalContent() {
   const { closeModal, openModal } = useModal();
   const { galleryUserInfo, setGalleryUserInfo, getSubmitData, resetAuthState } =
     useAuthStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const session = useSession();
+  const { disconnect } = useDisconnect({
+    topic: session?.topic || '',
+    reason: getSdkError('USER_DISCONNECTED'),
+  });
 
   const handleInputChange = (
     field: keyof typeof galleryUserInfo,
@@ -21,6 +28,19 @@ export default function GalleryModalContent() {
 
   const handleBack = () => {
     openModal(<SelectUserTypeModalContent />);
+  };
+
+  const handleCloseModal = async () => {
+    try {
+      // 모달을 닫기 전에 지갑 연결 해제
+      if (session) {
+        await disconnect();
+      }
+    } catch (error) {
+      console.error('Failed to disconnect wallet:', error);
+    } finally {
+      closeModal();
+    }
   };
 
   const handleSubmit = async () => {
@@ -58,7 +78,7 @@ export default function GalleryModalContent() {
     <div className="relative bg-gray-900 border border-blue-500 rounded-lg p-8 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
       {/* Close Button */}
       <button
-        onClick={closeModal}
+        onClick={handleCloseModal}
         className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
       >
         <X className="w-6 h-6" />
@@ -74,7 +94,7 @@ export default function GalleryModalContent() {
 
       {/* Header */}
       <div className="text-center mb-6 mt-8">
-        <h2 className="text-2xl font-bold text-white mb-2">Gallery User</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">Gallery</h2>
         <p className="text-gray-400 text-sm">Tell us about your gallery</p>
       </div>
 
