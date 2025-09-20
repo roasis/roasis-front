@@ -1,4 +1,6 @@
 'use client';
+
+import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import CustomDropdown from '@/src/components/ui/CustomDropdown';
@@ -105,7 +107,9 @@ export default function MarketplacePage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {artworks.map((artwork) => (
-          <ArtworkCard key={artwork.id} artwork={artwork} />
+          <Link href={`/artworks/${artwork.id}`} key={artwork.id}>
+            <ArtworkCard artwork={artwork} />
+          </Link>
         ))}
       </div>
     </div>

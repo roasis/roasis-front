@@ -11,7 +11,9 @@ export default function Header() {
   return (
     <header className="flex items-center justify-around p-6 text-white">
       <div className="flex items-center space-x-8">
-        <Image src="/roasis.png" alt="logo" width={100} height={28} />
+        <Link href="/">
+          <Image src="/roasis.png" alt="logo" width={100} height={28} />
+        </Link>
         <nav className="flex items-center space-x-6 text-sm">
           <Link href="/marketplace" className="hover:text-gray-300">
             Marketplace

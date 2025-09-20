@@ -17,3 +17,12 @@ export interface RegisterArtwork {
   count: number;
   image: File | null;
 }
+
+export interface Fragment {
+  id: string
+  position: number
+  price: number
+  status: "available" | "sold" | "reserved"
+  owner?: string
+  xrplTokenId?: string
+}
