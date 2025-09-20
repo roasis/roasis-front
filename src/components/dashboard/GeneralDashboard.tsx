@@ -8,10 +8,12 @@ import { GeneralDashboardTabs } from '@/src/types/dashboard';
 import Button from '../ui/Button';
 import { PlusIcon } from '../icons';
 import { GENERAL_DASHBOARD_TABS } from '@/src/constants/dashboard';
+import { useRouter } from 'next/navigation';
 
 export default function GeneralDashboard() {
   const [activeTab, setActiveTab] =
     useState<GeneralDashboardTabs>('Collection');
+  const router = useRouter();
 
   // 샘플 데이터 - 실제로는 API에서 가져올 데이터
   const kpiData = [
@@ -102,7 +104,12 @@ export default function GeneralDashboard() {
             onTabChange={setActiveTab}
           />
 
-          <Button className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+          <Button
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            onClick={() => {
+              router.push('/artworks/register');
+            }}
+          >
             <PlusIcon />
             <span>Add New Artwork</span>
           </Button>
