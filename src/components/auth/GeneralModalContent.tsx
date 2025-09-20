@@ -55,7 +55,7 @@ export default function GeneralModalContent() {
     generalUserInfo.name.trim() && generalUserInfo.email.trim();
 
   return (
-    <div className="relative bg-gray-900 border border-blue-500 rounded-lg p-8 max-w-md w-full mx-4">
+    <div className="relative bg-gray-900 border border-blue-500 rounded-lg p-8 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
       {/* Close Button */}
       <button
         onClick={closeModal}
@@ -73,13 +73,13 @@ export default function GeneralModalContent() {
       </button>
 
       {/* Header */}
-      <div className="text-center mb-8 mt-8">
-        <h2 className="text-3xl font-bold text-white mb-2">General User</h2>
-        <p className="text-gray-400">Tell us about yourself</p>
+      <div className="text-center mb-6 mt-8">
+        <h2 className="text-2xl font-bold text-white mb-2">General User</h2>
+        <p className="text-gray-400 text-sm">Tell us about yourself</p>
       </div>
 
       {/* Form */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
           <label className="block text-white text-sm font-medium mb-2">
             Name <strong className="text-red-500">*</strong>
@@ -123,7 +123,7 @@ export default function GeneralModalContent() {
       </div>
 
       {/* Submit Button */}
-      <div className="mt-8">
+      <div className="mt-6">
         <button
           onClick={handleSubmit}
           disabled={!isFormValid || isSubmitting}
