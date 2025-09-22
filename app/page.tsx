@@ -6,6 +6,7 @@ import { Meteors } from '@/components/ui/meteors';
 import { useEffect, useRef } from 'react';
 
 import Link from 'next/link';
+import { Particles } from '@/components/ui/particles';
 
 export default function Home() {
   interface Vertex {
@@ -281,6 +282,8 @@ export default function Home() {
         <StarCanvasClose />
       </>
       <Meteors />
+      <Particles className="absolute inset-0 z-0" />
+
       <div
         className="relative overflow-hidden w-full max-w-6xl mx-auto border border-gray-800 rounded-2xl p-24"
         style={{
