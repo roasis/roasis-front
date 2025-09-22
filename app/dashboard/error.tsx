@@ -1,5 +1,7 @@
 'use client';
 
+import { Particles } from '@/components/ui/particles';
+
 export default function Error({
   error,
   reset,
@@ -8,7 +10,9 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen relative z-10">
+      <Particles className="absolute inset-0 z-0" />
+
       <div className="text-center">
         <p className="text-red-600 mb-4">{error.message}</p>
         <button
