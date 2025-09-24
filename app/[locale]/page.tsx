@@ -10,6 +10,12 @@ import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const t = useTranslations('Page');
+
+import Link from 'next/link';
+import { Particles } from '@/components/ui/particles';
+
+export default function Home() {
+
   interface Vertex {
     pos: number[];
     velocity: number[];
@@ -304,6 +310,12 @@ export default function Home() {
           {t('decs1')}
           <br />
           {t('decs2')}
+            Invest in Authenticity
+          </Highlighter>{' '}
+        </h1>
+        <p className="text-base text-gray-300 mb-8">
+          Discover and acquire authenticated artworks, <br />
+          exclusively verified by the world's leading galleries.
         </p>
         <Link href="marketplace">
           <button
