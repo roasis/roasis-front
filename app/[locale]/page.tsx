@@ -1,21 +1,15 @@
 'use client';
 
-import { BorderBeam } from '@/components/ui/border-beam';
-import { Highlighter } from '@/components/ui/highlighter';
-import { Meteors } from '@/components/ui/meteors';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Particles } from '@/components/ui/particles';
 import { useTranslations } from 'next-intl';
+import { Meteors } from '../../components/ui/meteors';
+import { Particles } from '../../components/ui/particles';
+import { BorderBeam } from '../../components/ui/border-beam';
+import { Highlighter } from '../../components/ui/highlighter';
 
 export default function Home() {
   const t = useTranslations('Page');
-
-import Link from 'next/link';
-import { Particles } from '@/components/ui/particles';
-
-export default function Home() {
-
   interface Vertex {
     pos: number[];
     velocity: number[];
@@ -310,12 +304,6 @@ export default function Home() {
           {t('decs1')}
           <br />
           {t('decs2')}
-            Invest in Authenticity
-          </Highlighter>{' '}
-        </h1>
-        <p className="text-base text-gray-300 mb-8">
-          Discover and acquire authenticated artworks, <br />
-          exclusively verified by the world's leading galleries.
         </p>
         <Link href="marketplace">
           <button
