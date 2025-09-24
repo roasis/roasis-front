@@ -1,0 +1,13 @@
+{
+  "Header": {
+    "artists": "아티스트",
+    "artworks": "작품",
+    "galleries": "갤러리",
+    "marketplace": "마켓플레이스",
+    "dashboard": "대시보드",
+    "searchPlaceholder": "작품, 아티스트, 갤러리 검색"
+  },
+  "ArtistPage": {
+    "preparingUpdates": "업데이트 준비 중입니다."
+  }
+}
