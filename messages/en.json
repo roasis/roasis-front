@@ -7,6 +7,12 @@
     "dashboard": "Dashboard",
     "searchPlaceholder": "Search art, artists, galleries"
   },
+  "Page": {
+    "title": "Invest in Authenticity",
+    "decs1": "Discover and acquire authenticated artworks,",
+    "decs2": "exclusively verified by the world's leading galleries.",
+    "btn": "Explore the Marketplace"
+  },
   "ArtistPage": {
     "preparingUpdates": "Updates are being prepared."
   }

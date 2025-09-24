@@ -4,11 +4,12 @@ import { BorderBeam } from '@/components/ui/border-beam';
 import { Highlighter } from '@/components/ui/highlighter';
 import { Meteors } from '@/components/ui/meteors';
 import { useEffect, useRef } from 'react';
-
 import Link from 'next/link';
 import { Particles } from '@/components/ui/particles';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
+  const t = useTranslations('Page');
   interface Vertex {
     pos: number[];
     velocity: number[];
@@ -296,12 +297,13 @@ export default function Home() {
 
         <h1 className="text-6xl font-bold text-white mb-4">
           <Highlighter action="underline" color="#87CEFA">
-            Invest in Authenticity
+            {t('title')}
           </Highlighter>{' '}
         </h1>
         <p className="text-base text-gray-300 mb-8">
-          Discover and acquire authenticated artworks, <br />
-          exclusively verified by the world's leading galleries.
+          {t('decs1')}
+          <br />
+          {t('decs2')}
         </p>
         <Link href="marketplace">
           <button
@@ -313,7 +315,7 @@ export default function Home() {
               backgroundPosition: 'center',
             }}
           >
-            Explore the Marketplace
+            {t('btn')}
           </button>
         </Link>
       </div>
