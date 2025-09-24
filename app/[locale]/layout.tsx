@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       'XRPL을 이용한 혁신적인 조각투자 플랫폼. 예술작품을 작은 조각으로 나누어 투자하고, 블록체인 기술로 안전하게 거래하세요.',
     images: [
       {
-        url: '/roasis.png',
+        url: '/favicon.ico',
         width: 1200,
         height: 630,
         alt: 'roasis - XRPL 조각투자 플랫폼',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: 'roasis - XRPL 조각투자 플랫폼',
     description:
       'XRPL을 이용한 혁신적인 조각투자 플랫폼. 예술작품을 작은 조각으로 나누어 투자하세요.',
-    images: ['/roasis.png'],
+    images: ['/favicon.ico'],
   },
 
   // Viewport
@@ -100,11 +100,11 @@ export const metadata: Metadata = {
   // Icons
   icons: {
     icon: [
-      { url: '/roasis.png' },
-      { url: '/roasis.png', sizes: '16x16', type: 'image/png' },
-      { url: '/roasis.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico' },
+      { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
     ],
-    apple: [{ url: '/roasis.png', sizes: '180x180', type: 'image/png' }],
+    apple: [{ url: '/favicon.ico', sizes: '180x180', type: 'image/x-icon' }],
   },
 
   // Additional meta tags
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'msapplication-TileColor': '#000000',
-    'msapplication-TileImage': '/roasis.png',
+    'msapplication-TileImage': '/favicon.ico',
   },
 };
 
@@ -144,7 +144,7 @@ export default async function RootLayout({
         />
 
         {/* Preload important resources */}
-        <link rel="preload" href="/roasis.png" as="image" />
+        <link rel="preload" href="/favicon.ico" as="image" />
 
         {/* Additional structured data */}
         <script
