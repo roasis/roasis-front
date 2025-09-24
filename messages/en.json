@@ -1,0 +1,13 @@
+{
+  "Header": {
+    "artists": "Artists",
+    "artworks": "Artworks",
+    "galleries": "Galleries",
+    "marketplace": "Marketplace",
+    "dashboard": "Dashboard",
+    "searchPlaceholder": "Search art, artists, galleries"
+  },
+  "ArtistPage": {
+    "preparingUpdates": "Updates are being prepared."
+  }
+}
