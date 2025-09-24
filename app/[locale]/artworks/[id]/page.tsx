@@ -41,7 +41,7 @@ const totalFragments = artworkDetail.gridSize * artworkDetail.gridSize;
 export default function ArtworkDetailPage({
   params: _params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = useSession();
   const [selectedFragments, setSelectedFragments] = useState<Fragment[]>([]);
