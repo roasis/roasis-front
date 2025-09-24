@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Meteors } from '../../components/ui/meteors';
-import { Particles } from '../../components/ui/particles';
-import { BorderBeam } from '../../components/ui/border-beam';
-import { Highlighter } from '../../components/ui/highlighter';
+import { Meteors } from '@/components/ui/meteors';
+import { Particles } from '@/components/ui/particles';
+import { BorderBeam } from '@/components/ui/border-beam';
+import { Highlighter } from '@/components/ui/highlighter';
 
 export default function Home() {
   const t = useTranslations('Page');
