@@ -33,7 +33,7 @@ export default function CustomDropdown({
   }, [dropdownRef]);
 
   return (
-    <div className="relative w-full" ref={dropdownRef}>
+    <div className="z-20 relative w-full" ref={dropdownRef}>
       <label className="text-base text-gray-400">{label}</label>
       <button
         onClick={() => setIsOpen(!isOpen)}
