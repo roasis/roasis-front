@@ -7,6 +7,10 @@
     "dashboard": "Dashboard",
     "searchPlaceholder": "Search art, artists, galleries"
   },
+  "Wallet-btn": {
+    "onDisconnect": "Disconnect",
+    "onConnect": "Connect Wallet"
+  },
   "Page": {
     "title": "Invest in Authenticity",
     "decs1": "Discover and acquire authenticated artworks,",

@@ -7,6 +7,10 @@
     "dashboard": "대시보드",
     "searchPlaceholder": "작품, 아티스트, 갤러리 검색"
   },
+  "Wallet-btn": {
+    "onDisconnect": "연결 끊기",
+    "onConnect": "지갑 연결"
+  },
   "Page": {
     "title": "진정성에 투자하세요",
     "decs1": "인증된 예술 작품을 발견하고 획득하세요,",
