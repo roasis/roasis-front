@@ -11,6 +11,27 @@
     "onDisconnect": "Disconnect",
     "onConnect": "Connect Wallet"
   },
+  "Marketplace": {
+    "header": "Marketplace",
+    "decs": "Discover gallery-verified artworks from around the world",
+    "mediumOptions": {
+      "all": "All",
+      "oilOnCanvas": "Oil on Canvas",
+      "polishSteel": "Polish Steel",
+      "digitalPrintOnAluminum": "Digital Print on Aluminum"
+    },
+    "sortOptions": {
+      "newest": "Newest",
+      "priceLowToHigh": "Price: Low to High",
+      "priceHighToLow": "Price: High to Low"
+    },
+    "label": {
+      "medium": "Medium",
+      "sort": "Sort By"
+    },
+    "progress": "Investment Progress",
+    "price": "Fragment Price"
+  },
   "Page": {
     "title": "Invest in Authenticity",
     "decs1": "Discover and acquire authenticated artworks,",
