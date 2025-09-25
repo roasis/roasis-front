@@ -6,6 +6,7 @@ import { useState } from 'react';
 import CustomDropdown from '@/src/components/ui/CustomDropdown';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { Particles } from '@/components/ui/particles';
+import { useTranslations } from 'next-intl';
 
 // Define a type for the artwork object
 interface Artwork {
@@ -63,17 +64,10 @@ const artworks: Artwork[] = [
   },
 ];
 
-const mediumOptions = [
-  'All',
-  'Oil on Canvas',
-  'Polish Stell',
-  'Digital Print on Aluminum',
-];
-const sortOptions = ['Newest', 'Price: Low to High', 'Price: High to Low'];
-
 const ArtworkCard = ({ artwork }: { artwork: Artwork }) => {
   const progressPercentage =
     (artwork.soldFragments / artwork.totalFragments) * 100;
+  const t = useTranslations('Marketplace');
 
   return (
     <div className="bg-[#1A1A1A] rounded-lg overflow-hidden hover:scale-102 ease-in-out relative z-10">
@@ -93,7 +87,7 @@ const ArtworkCard = ({ artwork }: { artwork: Artwork }) => {
 
         <div>
           <div className="flex justify-between text-xs text-gray-400 mb-1">
-            <span>Investment Progress</span>
+            <span>{t('progress')}</span>
             <span>
               {artwork.soldFragments}/{artwork.totalFragments} sold
             </span>
@@ -107,7 +101,7 @@ const ArtworkCard = ({ artwork }: { artwork: Artwork }) => {
         </div>
 
         <div className="flex flex-col items-start pt-2 mb-3">
-          <span className="text-sm text-gray-400">Fragment Price</span>
+          <span className="text-sm text-gray-400">{t('price')}</span>
           <span className="text-right font-bold">{artwork.price}</span>
         </div>
       </div>
@@ -116,27 +110,41 @@ const ArtworkCard = ({ artwork }: { artwork: Artwork }) => {
 };
 
 export default function MarketplacePage() {
-  const [selectedMedium, setSelectedMedium] = useState('All');
-  const [selectedSort, setSelectedSort] = useState('Newest');
+  const t = useTranslations('Marketplace');
+
+  // 번역된 옵션들을 동적으로 생성
+  const mediumOptions = [
+    t('mediumOptions.all'),
+    t('mediumOptions.oilOnCanvas'),
+    t('mediumOptions.polishSteel'),
+    t('mediumOptions.digitalPrintOnAluminum'),
+  ];
+
+  const sortOptions = [
+    t('sortOptions.newest'),
+    t('sortOptions.priceLowToHigh'),
+    t('sortOptions.priceHighToLow'),
+  ];
+
+  const [selectedMedium, setSelectedMedium] = useState(mediumOptions[0]);
+  const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
 
   return (
     <div className="p-8 text-white ">
-      <h1 className="text-4xl font-bold">Marketplace</h1>
-      <p className="text-gray-400 mt-2 mb-8">
-        Discover gallery-verified artworks from around the world
-      </p>
+      <h1 className="text-4xl font-bold">{t('header')}</h1>
+      <p className="text-gray-400 mt-2 mb-8">{t('decs')}</p>
       <Particles className="absolute inset-0 z-0" />
 
       <div className="relative bg-[#1A1A1A] p-4 rounded-lg mb-8">
         <div className="grid grid-cols-2 gap-4">
           <CustomDropdown
-            label="Medium"
+            label={t('label.medium')}
             options={mediumOptions}
             selected={selectedMedium}
             onSelect={setSelectedMedium}
           />
           <CustomDropdown
-            label="Sort By"
+            label={t('label.sort')}
             options={sortOptions}
             selected={selectedSort}
             onSelect={setSelectedSort}
