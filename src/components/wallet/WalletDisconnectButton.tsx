@@ -3,6 +3,7 @@ import { useDisconnect } from '@walletconnect/modal-sign-react';
 import { getSdkError } from '@walletconnect/utils';
 import { SessionTypes } from '@walletconnect/types';
 import Button from '@/src/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 export default function WalletDisconnectButton({
   session,
@@ -13,6 +14,8 @@ export default function WalletDisconnectButton({
     topic: session?.topic,
     reason: getSdkError('USER_DISCONNECTED'),
   });
+
+  const t = useTranslations('Wallet-btn');
 
   const onDisconnect = async () => {
     try {
@@ -29,7 +32,7 @@ export default function WalletDisconnectButton({
       disabled={isDisconnecting}
       className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
     >
-      Disconnect
+      {t('onDisconnect')}
     </Button>
   );
 }
