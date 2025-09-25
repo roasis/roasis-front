@@ -11,6 +11,27 @@
     "onDisconnect": "연결 끊기",
     "onConnect": "지갑 연결"
   },
+  "Marketplace": {
+    "header": "마켓플레이스",
+    "decs": "전 세계 갤러리에서 인증된 예술 작품 발굴하기",
+    "mediumOptions": {
+      "all": "전체",
+      "oilOnCanvas": "캔버스에 오일",
+      "polishSteel": "폴리시 스틸",
+      "digitalPrintOnAluminum": "알루미늄 디지털 프린트"
+    },
+    "sortOptions": {
+      "newest": "최신순",
+      "priceLowToHigh": "가격: 낮은 순",
+      "priceHighToLow": "가격: 높은 순"
+    },
+    "label": {
+      "medium": "미디움",
+      "sort": "정렬하기"
+    },
+    "progress": "투자 진행률",
+    "price": "조각 가격"
+  },
   "Page": {
     "title": "진정성에 투자하세요",
     "decs1": "인증된 예술 작품을 발견하고 획득하세요,",
