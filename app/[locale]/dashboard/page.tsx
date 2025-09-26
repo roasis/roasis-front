@@ -5,9 +5,11 @@ import GeneralDashboard from '@/src/components/dashboard/GeneralDashboard';
 import { useRole } from '@/src/hooks/useRole';
 import { UserRole } from '@/src/dto/auth';
 import { Particles } from '@/components/ui/particles';
+import { useTranslations } from 'next-intl';
 
 export default function DashboardPage() {
   const { role, isLoading, error } = useRole();
+  const t = useTranslations('Dashboard');
 
   if (isLoading) {
     return (
@@ -16,7 +18,7 @@ export default function DashboardPage() {
 
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">사용자 정보를 불러오는 중...</p>
+          <p className="mt-4 text-gray-600">{t('loading')}</p>
         </div>
       </div>
     );
