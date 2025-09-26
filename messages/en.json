@@ -32,6 +32,10 @@
     "progress": "Investment Progress",
     "price": "Fragment Price"
   },
+  "Dashboard": {
+    "loading": "Getting user information...",
+    "error": "Try again"
+  },
   "Page": {
     "title": "Invest in Authenticity",
     "decs1": "Discover and acquire authenticated artworks,",
