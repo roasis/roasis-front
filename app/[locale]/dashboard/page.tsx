@@ -13,7 +13,7 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen relative z-10">
+      <div className="flex items-center justify-center min-h-screen z-10">
         <Particles className="absolute inset-0 z-0" />
 
         <div className="text-center">
