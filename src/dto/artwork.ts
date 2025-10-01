@@ -47,6 +47,35 @@ export interface RegisterMintResponseDTO {
   status: string;
 }
 
+export interface RegisterMintRequestDTO {
+  image: File;
+  title: string;
+  description: string;
+  year: string;
+  size: string;
+  medium: string;
+  price_usd: number;
+  grid_n: number;
+  artist_address: string;
+  flags?: number;
+  transfer_fee?: number;
+  taxon?: number;
+}
+
+export interface RegisterMintResponseDTO {
+  artwork_id: number;
+  image_cid: string;
+  image_uri: string;
+  metadata_cid: string;
+  metadata_uri_base: string;
+  metadata_http_url: string;
+  minted: number;
+  failed: number;
+  tx_hashes: string[];
+  nftoken_ids: (string | null)[];
+  status: string;
+}
+
 export interface InviteArtistRequestDTO {
   artist_wallet_address: string;
 }

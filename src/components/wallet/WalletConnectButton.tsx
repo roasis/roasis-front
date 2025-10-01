@@ -7,8 +7,11 @@ import SelectUserTypeModalContent from '../auth/SelectUserTypeModalContent';
 import { useModal } from '@/src/hooks/useModal';
 import { AxiosError } from 'axios';
 import { useAuthStore } from '@/src/stores/authStore';
+import { useTranslations } from 'next-intl';
 
 export default function WalletConnectButton() {
+  const t = useTranslations('Wallet-btn');
+
   const [_account, setAccount] = useState<string | null>(null);
   const { login } = useLogin();
   const setWalletAddress = useAuthStore((state) => state.setWalletAddress);
@@ -51,7 +54,7 @@ export default function WalletConnectButton() {
       disabled={isConnecting}
       className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
     >
-      Connect Wallet
+      {t('onConnect')}
     </Button>
   );
 }

@@ -2,8 +2,6 @@ import type {
   RegisterMintRequestDTO,
   RegisterMintResponseDTO,
   RegisterArtwork,
-  ArtworkDetail,
-  ArtworkListResponseDTO,
 } from '@/src/dto/artwork';
 
 export class ArtworkMapper {
@@ -62,66 +60,5 @@ export class ArtworkMapper {
     }
 
     return message;
-  }
-
-  /**
-   * API ArtworkResponse를 프론트엔드에서 사용할 형식으로 변환
-   */
-  static toArtworkDetail(response: ArtworkDetail) {
-    return {
-      id: response.id,
-      title: response.title,
-      description: response.description,
-      size: response.size,
-      priceUsd: response.price_usd,
-      gridN: response.grid_n,
-      imageUrl: response.image_url,
-      metadataUriBase: response.metadata_uri_base,
-      artistAddress: response.artist_address,
-      createdAt: response.created_at,
-      // 가격을 센트 단위에서 달러 단위로 변환
-      priceInDollars: response.price_usd / 100,
-      // 프래그먼트 가격 계산
-      fragmentPrice: Math.floor(
-        response.price_usd / (response.grid_n * response.grid_n)
-      ),
-      fragmentPriceInDollars:
-        Math.floor(response.price_usd / (response.grid_n * response.grid_n)) /
-        100,
-    };
-  }
-
-  /**
-   * 작품 ID를 URL 파라미터에서 추출
-   */
-  static parseArtworkId(id: string): number | null {
-    const artworkId = parseInt(id, 10);
-    return isNaN(artworkId) ? null : artworkId;
-  }
-
-  /**
-   * API ArtworkListResponse를 마켓플레이스에서 사용할 형식으로 변환
-   */
-  static toMarketplaceArtwork(response: ArtworkListResponseDTO) {
-    return {
-      id: response.id,
-      title: response.title,
-      artist: response.artist_address, // artist_address를 artist로 매핑
-      verifier: 'Verified by Gallery', // 임시로 고정값 사용
-      price: `$${(response.price_usd / 100).toLocaleString()} RLUSD`,
-      imageUrl: response.image_url,
-      soldFragments: 0, // 임시로 0으로 설정 (실제로는 NFT 상태를 확인해야 함)
-      totalFragments: 9, // 임시로 9로 설정 (실제로는 grid_n 정보가 필요함)
-      size: response.size,
-      createdAt: response.created_at,
-      priceUsd: response.price_usd,
-    };
-  }
-
-  /**
-   * 작품 목록을 마켓플레이스 형식으로 변환
-   */
-  static toMarketplaceArtworks(responses: ArtworkListResponseDTO[]) {
-    return responses.map((response) => this.toMarketplaceArtwork(response));
   }
 }

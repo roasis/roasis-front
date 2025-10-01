@@ -2,8 +2,6 @@ import httpV1 from './http';
 import type {
   RegisterMintRequestDTO,
   RegisterMintResponseDTO,
-  ArtworkDetail,
-  ArtworkListResponseDTO,
 } from '@/src/dto/artwork';
 
 /**
@@ -41,27 +39,6 @@ export const registerAndMintArtwork = async (
       },
     }
   );
-
-  return response.data;
-};
-
-/**
- * 작품 상세 정보 조회 API
- * @param artworkId 작품 ID
- * @returns ArtworkResponse
- */
-export const getArtwork = async (artworkId: number): Promise<ArtworkDetail> => {
-  const response = await httpV1.get<ArtworkDetail>(`/artworks/${artworkId}`);
-
-  return response.data;
-};
-
-/**
- * 작품 목록 조회 API
- * @returns ArtworkListResponse 배열
- */
-export const getArtworks = async (): Promise<ArtworkListResponseDTO[]> => {
-  const response = await httpV1.get<ArtworkListResponseDTO[]>('/artworks/');
 
   return response.data;
 };

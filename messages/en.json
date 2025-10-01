@@ -1,0 +1,48 @@
+{
+  "Header": {
+    "artists": "Artists",
+    "artworks": "Artworks",
+    "galleries": "Galleries",
+    "marketplace": "Marketplace",
+    "dashboard": "Dashboard",
+    "searchPlaceholder": "Search art, artists, galleries"
+  },
+  "Wallet-btn": {
+    "onDisconnect": "Disconnect",
+    "onConnect": "Connect Wallet"
+  },
+  "Marketplace": {
+    "header": "Marketplace",
+    "decs": "Discover gallery-verified artworks from around the world",
+    "mediumOptions": {
+      "all": "All",
+      "oilOnCanvas": "Oil on Canvas",
+      "polishSteel": "Polish Steel",
+      "digitalPrintOnAluminum": "Digital Print on Aluminum"
+    },
+    "sortOptions": {
+      "newest": "Newest",
+      "priceLowToHigh": "Price: Low to High",
+      "priceHighToLow": "Price: High to Low"
+    },
+    "label": {
+      "medium": "Medium",
+      "sort": "Sort By"
+    },
+    "progress": "Investment Progress",
+    "price": "Fragment Price"
+  },
+  "Dashboard": {
+    "loading": "Getting user information...",
+    "error": "Try again"
+  },
+  "Page": {
+    "title": "Invest in Authenticity",
+    "decs1": "Discover and acquire authenticated artworks,",
+    "decs2": "exclusively verified by the world's leading galleries.",
+    "btn": "Explore the Marketplace"
+  },
+  "ArtistPage": {
+    "preparingUpdates": "Updates are being prepared."
+  }
+}
