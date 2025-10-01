@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { Particles } from '@/components/ui/particles';
 
 export default async function ArtistPage({
   params,
@@ -10,6 +11,8 @@ export default async function ArtistPage({
 
   return (
     <div className="flex items-center justify-center h-screen">
+      <Particles className="absolute inset-0 z-0" />
+
       <div className="text-center">
         <h1 className="text-2xl">{t('preparingUpdates')}</h1>
         <p className="text-sm text-gray-500 mt-2">Current locale: {locale}</p>
