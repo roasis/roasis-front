@@ -44,5 +44,10 @@
   },
   "ArtistPage": {
     "preparingUpdates": "업데이트 준비 중입니다."
+  },
+  "Galleries": {
+    "header": "갤러리들",
+    "title": "전 세계의 파트너 갤러리를 만나보세요",
+    "loading": "갤러리를 불러오는 중..."
   }
 }
