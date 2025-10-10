@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getGalleries } from '@/src/api/galleries';
 import type { Gallery } from '@/src/dto/gallery';
 import { Particles } from '@/components/ui/particles';
+import { useTranslations } from 'next-intl';
 
 const GalleryCard = ({ gallery }: { gallery: Gallery }) => (
   <div className="bg-[#1A1A1A] rounded-lg overflow-hidden group relative z-10">
@@ -44,6 +45,7 @@ export default function GalleriesPage() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('Galleries');
 
   useEffect(() => {
     const fetchGalleries = async () => {
@@ -65,12 +67,10 @@ export default function GalleriesPage() {
     <div className="p-8 text-white">
       <Particles className="absolute inset-0 z-0" />
 
-      <h1 className="text-4xl font-bold">Galleries</h1>
-      <p className="text-gray-400 mt-2 mb-8">
-        Discover our partnered galleries from around the world
-      </p>
+      <h1 className="text-4xl font-bold">{t('header')}</h1>
+      <p className="text-gray-400 mt-2 mb-8">{t('title')}</p>
 
-      {loading && <p className="text-center">Loading galleries...</p>}
+      {loading && <p className="text-center">{t('loading')}</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
 
       {!loading && !error && (
