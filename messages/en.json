@@ -44,5 +44,10 @@
   },
   "ArtistPage": {
     "preparingUpdates": "Updates are being prepared."
+  },
+  "Galleries": {
+    "header": "Galleries",
+    "title": "Discover our partnered galleries from around the world",
+    "loading": "Loading galleries..."
   }
 }
