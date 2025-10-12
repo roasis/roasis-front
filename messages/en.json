@@ -48,6 +48,10 @@
   "Galleries": {
     "header": "Galleries",
     "title": "Discover our partnered galleries from around the world",
-    "loading": "Loading galleries..."
+    "loading": "Loading galleries...",
+    "not-found": "Gallery not found.",
+    "link": "Visit Website",
+    "id-header": "Artists",
+    "no-artists": "No artists found for this gallery."
   }
 }
