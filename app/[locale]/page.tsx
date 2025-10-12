@@ -9,7 +9,6 @@ import { BorderBeam } from '@/components/ui/border-beam';
 import { Highlighter } from '@/components/ui/highlighter';
 
 export default function Home() {
-  
   const t = useTranslations('Page');
 
   interface Vertex {
@@ -42,7 +41,6 @@ export default function Home() {
       function getVertex(sx: number, sy: number): Vertex {
         const id = `${sx}x${sy}`;
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!vertexMap[id]) {
           const x =
             TILE * sx + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR;
@@ -92,7 +90,6 @@ export default function Home() {
             const a = 1 - pos[2];
 
             ctx?.beginPath();
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             ctx!.fillStyle = `rgba(255, 255, 255, ${a})`;
             ctx?.arc(x, y, size, 0, 2 * Math.PI);
             ctx?.fill();
@@ -113,7 +110,6 @@ export default function Home() {
           }
         });
       });
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       parentElement && observer.observe(parentElement);
 
       return () => {
@@ -166,7 +162,6 @@ export default function Home() {
       function getVertex(sx: number, sy: number): Vertex {
         const id = `${sx}x${sy}`;
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!vertexMap[id]) {
           const x =
             TILE_CLOSE * sx +
@@ -220,7 +215,6 @@ export default function Home() {
             const a = 1 - pos[2];
 
             ctx?.beginPath();
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             ctx!.fillStyle = `rgba(255, 255, 255, ${a})`;
             ctx?.arc(x, y, size, 0, 2 * Math.PI);
             ctx?.fill();

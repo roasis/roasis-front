@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getGalleryById, getArtistsByGalleryId } from '@/src/api/galleries';
 import type { Gallery, GalleryArtist } from '@/src/dto/gallery';
+import { useTranslations } from 'next-intl';
 
 const ArtistCard = ({ artist }: { artist: GalleryArtist }) => (
   <div className="bg-[#1A1A1A] rounded-lg p-4 flex items-center space-x-4 group">
@@ -34,6 +35,7 @@ export default function GalleryDetailPage({
   const [artists, setArtists] = useState<GalleryArtist[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('Galleries');
 
   useEffect(() => {
     if (!id) return;
@@ -59,10 +61,10 @@ export default function GalleryDetailPage({
   }, [id]);
 
   if (loading)
-    return <p className="p-8 text-center text-white">Loading gallery...</p>;
+    return <p className="p-8 text-center text-white">{t('loading')}</p>;
   if (error) return <p className="p-8 text-center text-red-500">{error}</p>;
   if (!gallery)
-    return <p className="p-8 text-center text-white">Gallery not found.</p>;
+    return <p className="p-8 text-center text-white">{t('not-found')}</p>;
 
   return (
     <div className="p-8 text-white">
@@ -88,7 +90,7 @@ export default function GalleryDetailPage({
                 rel="noopener noreferrer"
                 className="text-brend hover:underline"
               >
-                Visit Website
+                {t('link')}
               </Link>
             )}
           </div>
@@ -97,16 +99,14 @@ export default function GalleryDetailPage({
 
       {/* Section 2: Artists in this Gallery */}
       <div>
-        <h2 className="text-3xl font-bold mb-6">Artists</h2>
+        <h2 className="text-3xl font-bold mb-6">{t('id-header')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {artists.length > 0 ? (
             artists.map((artist) => (
               <ArtistCard key={artist.id} artist={artist} />
             ))
           ) : (
-            <p className="text-gray-500 col-span-full">
-              No artists found for this gallery.
-            </p>
+            <p className="text-gray-500 col-span-full">{t('no-artists')}</p>
           )}
         </div>
       </div>
