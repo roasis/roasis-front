@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getGalleryById, getArtistsByGalleryId } from '@/src/api/galleries';
 import type { Gallery, GalleryArtist } from '@/src/dto/gallery';
+import { Particles } from '@/components/ui/particles';
 import { useTranslations } from 'next-intl';
 
 const ArtistCard = ({ artist }: { artist: GalleryArtist }) => (
@@ -70,6 +71,8 @@ export default function GalleryDetailPage({
     <div className="p-8 text-white">
       {/* Section 1: Gallery Details */}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-12">
+        <Particles className="absolute inset-0 z-0" />
+
         <div className="relative w-48 h-48 rounded-full overflow-hidden flex-shrink-0">
           <Image
             src={gallery.profile_image_url || '/cat.jpg'}
