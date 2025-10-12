@@ -22,6 +22,20 @@ export default function Header() {
           <Link href={`/${locale}/marketplace`} className="hover:text-gray-300">
             {t('marketplace')}
           </Link>
+<<<<<<< HEAD
+          {/* <Link href="/artists" className="hover:text-gray-300">
+            Artists
+          </Link> */}
+          <Link href="/galleries" className="hover:text-gray-300">
+            Galleries
+          </Link>
+
+          {session && (
+            <Link href="/dashboard" className="hover:text-gray-300">
+              Dashboard
+            </Link>
+          )}
+=======
           <Link href={`/${locale}/artists`} className="hover:text-gray-300">
             {t('artists')}
           </Link>
@@ -31,6 +45,7 @@ export default function Header() {
           <Link href={`/${locale}/dashboard`} className="hover:text-gray-300">
             {t('dashboard')}
           </Link>
+>>>>>>> main
         </nav>
       </div>
       <div className="flex items-center space-x-4">

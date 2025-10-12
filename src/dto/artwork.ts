@@ -18,13 +18,33 @@ export interface RegisterArtwork {
   image: File | null;
 }
 
-export interface Fragment {
-  id: string;
-  position: number;
-  price: number;
-  status: 'available' | 'sold' | 'reserved';
-  owner?: string;
-  xrplTokenId?: string;
+export interface RegisterMintRequestDTO {
+  image: File;
+  title: string;
+  description: string;
+  year: string;
+  size: string;
+  medium: string;
+  price_usd: number;
+  grid_n: number;
+  artist_address: string;
+  flags?: number;
+  transfer_fee?: number;
+  taxon?: number;
+}
+
+export interface RegisterMintResponseDTO {
+  artwork_id: number;
+  image_cid: string;
+  image_uri: string;
+  metadata_cid: string;
+  metadata_uri_base: string;
+  metadata_http_url: string;
+  minted: number;
+  failed: number;
+  tx_hashes: string[];
+  nftoken_ids: (string | null)[];
+  status: string;
 }
 
 export interface RegisterMintRequestDTO {
@@ -74,4 +94,42 @@ export interface InviteArtist422ResponseDTO {
       type: 'string';
     }
   ];
+}
+
+// NFT 관련 타입들
+export interface NFTOwner {
+  id: number;
+  artwork_id: number;
+  uri_hex: string;
+  nftoken_id: string;
+  tx_hash: string;
+  owner_address: string;
+  // status: 'offered_to_artist' | 'available' | 'sold' | 'reserved';
+  status: 'minted' | 'offered_to_artist';
+  price: number;
+}
+
+// Swagger API 명세에 맞춘 ArtworkListResponse 타입
+export interface ArtworkListResponseDTO {
+  id: number;
+  title: string;
+  size: string;
+  price_usd: number;
+  image_url: string;
+  artist_address: string;
+  created_at: string;
+}
+
+export interface ArtworkDetail {
+  id: number;
+  title: string;
+  description: string;
+  size: string;
+  price_usd: number;
+  grid_n: number;
+  image_url: string;
+  metadata_uri_base: string;
+  artist_address: string;
+  created_at: string;
+  nfts: NFTOwner[];
 }
